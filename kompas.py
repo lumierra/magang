@@ -10,11 +10,11 @@ list_category_liputan = ['news', 'ekonomi', 'bola', 'entertainment', 'tekno', 'o
 list_name_category_liputan = ['news', 'bisnis', 'sports', 'entertainment', 'tekno', 'otomotif']
 
 #delete data from mongoDB
-db.delete_dataDaily('scraper', 'test')
+db.delete_dataDaily('scraper', 'test', 'kompas.com')
 
 #Get Data
 for x,y in zip(list_category_liputan, list_name_category_liputan):
-    data = SK.get_dataHarian(x, y, now.year, now.month, now.day)
+    data = SK.get_dataDaily(x, y, now.year, now.month, now.day)
 
     attr = []
     for i in range(len(data)):

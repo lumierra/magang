@@ -47,7 +47,7 @@ class Database():
 
         doc = mycol.delete_many(query)
 
-    def delete_dataDaily(self, database=None, collection=None):
+    def delete_dataDaily(self, database=None, collection=None, source=None):
         myclient = pymongo.MongoClient("mongodb://{}:{}".format(self.host, self.port))
         mydb = myclient["{}".format(database)]
         mycol = mydb["{}".format(collection)]
@@ -59,18 +59,22 @@ class Database():
         if month <= 9:
             if day <= 9:
                 query = mycol.remove({
-                    'publishedAt': '{}-0{}-0{}'.format(year, month, day)
+                    'publishedAt': '{}-0{}-0{}'.format(year, month, day),
+                    'source' : source
                 })
             else:
                 query = mycol.remove({
-                    'publishedAt': '{}-0{}-{}'.format(year, month, day)
+                    'publishedAt': '{}-0{}-{}'.format(year, month, day),
+                    'source': source
                 })
         else:
             if day <= 9:
                 query = mycol.remove({
-                    'publishedAt': '{}-{}-0{}'.format(year, month, day)
+                    'publishedAt': '{}-{}-0{}'.format(year, month, day),
+                    'source': source
                 })
             else:
                 query = mycol.remove({
-                    'publishedAt': '{}-{}-{}'.format(year, month, day)
+                    'publishedAt': '{}-{}-{}'.format(year, month, day),
+                    'source': source
                 })

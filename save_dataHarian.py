@@ -12,7 +12,7 @@ list_category_liputan = ['news', 'bisnis', 'bola', 'showbiz', 'tekno', 'otomotif
 list_name_category_liputan = ['news', 'bisnis', 'sports', 'entertainment', 'tekno', 'otomotif']
 
 #delete data from mongoDB
-db.delete_dataDaily('scraper', 'test')
+db.delete_dataDaily('scraper', 'test', 'liputan6.com')
 
 #Get Data
 for x,y in zip(list_category_liputan, list_name_category_liputan):
