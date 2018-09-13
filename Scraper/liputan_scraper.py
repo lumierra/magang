@@ -119,7 +119,7 @@ class Scraper_Liputan():
                                     subCategory = contents[y].select_one('.articles--rows--item__category').text
                                     title = contents[y].select_one('.articles--rows--item__title').text
                                     description = contents[y].select_one('.articles--rows--item__summary').text
-                                    date = url.split('/')[5] + '-' + url.split('/')[6] + '-' + url.split('/')[7].split('?')[0]
+                                    date = url.split('/')[7].split('?')[0] + '-' + url.split('/')[6] + '-' + url.split('/')[5]
 
                                     data_json = {
                                         "category": name_category,
@@ -158,7 +158,7 @@ class Scraper_Liputan():
                                     subCategory = contents[y].select_one('.articles--rows--item__category').text
                                     title = contents[y].select_one('.articles--rows--item__title').text
                                     description = contents[y].select_one('.articles--rows--item__summary').text
-                                    date = url.split('/')[5] + '-' + url.split('/')[6] + '-' + url.split('/')[7].split('?')[0]
+                                    date = url.split('/')[7].split('?')[0] + '-' + url.split('/')[6] + '-' + url.split('/')[5]
 
                                     data_json = {
                                         "category": name_category,
@@ -200,8 +200,7 @@ class Scraper_Liputan():
                                     subCategory = contents[y].select_one('.articles--rows--item__category').text
                                     title = contents[y].select_one('.articles--rows--item__title').text
                                     description = contents[y].select_one('.articles--rows--item__summary').text
-                                    date = url.split('/')[5] + '-' + url.split('/')[6] + '-' + \
-                                           url.split('/')[7].split('?')[0]
+                                    date = url.split('/')[7].split('?')[0] + '-' + url.split('/')[6] + '-' + url.split('/')[5]
 
                                     data_json = {
                                         "category": name_category,
@@ -241,7 +240,7 @@ class Scraper_Liputan():
                                     subCategory = contents[y].select_one('.articles--rows--item__category').text
                                     title = contents[y].select_one('.articles--rows--item__title').text
                                     description = contents[y].select_one('.articles--rows--item__summary').text
-                                    date = url.split('/')[5] + '-' + url.split('/')[6] + '-' + url.split('/')[7].split('?')[0]
+                                    date = url.split('/')[7].split('?')[0] + '-' + url.split('/')[6] + '-' + url.split('/')[5]
 
                                     data_json = {
                                         "category": name_category,
@@ -288,7 +287,7 @@ class Scraper_Liputan():
                             subCategory = contents[y].select_one('.articles--rows--item__category').text
                             title = contents[y].select_one('.articles--rows--item__title').text
                             description = contents[y].select_one('.articles--rows--item__summary').text
-                            date = url.split('/')[5] + '-' + url.split('/')[6] + '-' + url.split('/')[7].split('?')[0]
+                            date = url.split('/')[7].split('?')[0] + '-' + url.split('/')[6] + '-' + url.split('/')[5]
 
                             data_json = {
                                 "category": name_category,
@@ -328,8 +327,7 @@ class Scraper_Liputan():
                                 subCategory = contents[y].select_one('.articles--rows--item__category').text
                                 title = contents[y].select_one('.articles--rows--item__title').text
                                 description = contents[y].select_one('.articles--rows--item__summary').text
-                                date = url.split('/')[5] + '-' + url.split('/')[6] + '-' + url.split('/')[7].split('?')[
-                                    0]
+                                date = url.split('/')[7].split('?')[0] + '-' + url.split('/')[6] + '-' + url.split('/')[5]
 
                                 data_json = {
                                     "category": name_category,
@@ -368,7 +366,7 @@ class Scraper_Liputan():
                                 subCategory = contents[y].select_one('.articles--rows--item__category').text
                                 title = contents[y].select_one('.articles--rows--item__title').text
                                 description = contents[y].select_one('.articles--rows--item__summary').text
-                                date = url.split('/')[5] + '-' + url.split('/')[6] + '-' + url.split('/')[7].split('?')[0]
+                                date = url.split('/')[7].split('?')[0] + '-' + url.split('/')[6] + '-' + url.split('/')[5]
 
                                 data_json = {
                                     "category": name_category,

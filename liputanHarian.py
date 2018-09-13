@@ -4,7 +4,6 @@ from Scraper.liputan_scraper import Scraper_Liputan
 
 
 SL = Scraper_Liputan()
-SK = Scraper_Kompas()
 db = Database()
 now = datetime.datetime.now().date()
 

@@ -59,22 +59,22 @@ class Database():
         if month <= 9:
             if day <= 9:
                 query = mycol.remove({
-                    'publishedAt': '{}-0{}-0{}'.format(year, month, day),
+                    'publishedAt': '0{}-0{}-{}'.format(day, month, year),
                     'source' : source
                 })
             else:
                 query = mycol.remove({
-                    'publishedAt': '{}-0{}-{}'.format(year, month, day),
+                    'publishedAt': '{}-0{}-{}'.format(day, month, year),
                     'source': source
                 })
         else:
             if day <= 9:
                 query = mycol.remove({
-                    'publishedAt': '{}-{}-0{}'.format(year, month, day),
+                    'publishedAt': '0{}-{}-{}'.format(day, month, year),
                     'source': source
                 })
             else:
                 query = mycol.remove({
-                    'publishedAt': '{}-{}-{}'.format(year, month, day),
+                    'publishedAt': '{}-{}-{}'.format(day, month, year),
                     'source': source
                 })

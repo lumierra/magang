@@ -37,29 +37,32 @@ class Scraper_Kompas():
 
 
     def get_content(self, url=None):
-        response = requests.get(url, timeout=3).text
-        soup = BeautifulSoup(response, "html5lib")
+        try:
+            response = requests.get(url).text
+            soup = BeautifulSoup(response, "html5lib")
 
-        contents = soup.select_one('.photo > img')
-        contents2 = soup.select('.read__content > p')
+            contents = soup.select_one('.photo > img')
+            contents2 = soup.select('.read__content > p')
 
-        temp_img = contents['src']
+            temp_img = contents['src']
 
-        data = []
-        for i in range(len(contents2)):
-            if contents2[i].text != '':
-                if (contents2[i].text[:9] != 'Baca juga' and contents2[i].text[:5] != 'Baca:') \
-                        and (contents2[i].text[:15] != 'We are thrilled') and (contents2[i].text[:6] != 'Flinke'):
-                    data.append(contents2[i].text)
+            data = []
+            for i in range(len(contents2)):
+                if contents2[i].text != '':
+                    if (contents2[i].text[:9] != 'Baca juga' and contents2[i].text[:5] != 'Baca:') \
+                            and (contents2[i].text[:15] != 'We are thrilled') and (contents2[i].text[:6] != 'Flinke'):
+                        data.append(contents2[i].text)
 
-        p = ''.join(data)
-        p = preprocess_text(p, fix_unicode=True)
-        p = self.ner_text(p)
+            p = ''.join(data)
+            p = preprocess_text(p, fix_unicode=True)
+            p = self.ner_text(p)
 
-        data_json = {
-            "img": temp_img,
-            "content": p,
-        }
+            data_json = {
+                "img": temp_img,
+                "content": p,
+            }
+        except:
+            pass
 
         return data_json
 
@@ -108,7 +111,7 @@ class Scraper_Kompas():
                             temp_url = content.select_one('.article__link')['href']
                             temp_title = content.select_one('.article__link').text.strip()
                             temp_date = content.select_one('.article__date').text.replace(',', '').split()[0]
-                            temp_date = datetime.datetime.strptime(temp_date, "%d/%m/%Y").strftime("%Y-%m-%d")
+                            temp_date = datetime.datetime.strptime(temp_date, "%d/%m/%Y").strftime("%d-%m-%Y")
 
                             data_json = {
                                 "category": name_category,
@@ -148,7 +151,7 @@ class Scraper_Kompas():
                                     temp_url = content.select_one('.article__link')['href']
                                     temp_title = content.select_one('.article__link').text.strip()
                                     temp_date = content.select_one('.article__date').text.replace(',', '').split()[0]
-                                    temp_date = datetime.datetime.strptime(temp_date, "%d/%m/%Y").strftime("%Y-%m-%d")
+                                    temp_date = datetime.datetime.strptime(temp_date, "%d/%m/%Y").strftime("%d-%m-%Y")
 
                                     data_json = {
                                         "category": name_category,
@@ -198,7 +201,7 @@ class Scraper_Kompas():
                     temp_url = content.select_one('.article__link')['href']
                     temp_title = content.select_one('.article__link').text.strip()
                     temp_date = content.select_one('.article__date').text.replace(',', '').split()[0]
-                    temp_date = datetime.datetime.strptime(temp_date, "%d/%m/%Y").strftime("%Y-%m-%d")
+                    temp_date = datetime.datetime.strptime(temp_date, "%d/%m/%Y").strftime("%d-%m-%Y")
 
                     data_json = {
                         "category": name_category,
@@ -237,7 +240,7 @@ class Scraper_Kompas():
                             temp_url = content.select_one('.article__link')['href']
                             temp_title = content.select_one('.article__link').text.strip()
                             temp_date = content.select_one('.article__date').text.replace(',', '').split()[0]
-                            temp_date = datetime.datetime.strptime(temp_date, "%d/%m/%Y").strftime("%Y-%m-%d")
+                            temp_date = datetime.datetime.strptime(temp_date, "%d/%m/%Y").strftime("%d-%m-%Y")
 
                             data_json = {
                                 "category": name_category,
@@ -261,6 +264,12 @@ class Scraper_Kompas():
 
         return all_data
 
+    def get_dataHarian(self, category=None, name_category=None, year=None, month=None, day=None):
+        all_data = self.get_dataDaily(category, name_category, year, month, day)
+        all_data = self.get_content_fix((all_data))
+        all_data = self.clean_data(all_data)
+
+        return all_data
 
 
 
