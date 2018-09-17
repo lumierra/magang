@@ -1,5 +1,6 @@
 import id_aldo
 import requests
+import id_beritagar as indo
 from spacy import displacy
 from bs4 import BeautifulSoup
 from tqdm import tqdm, tqdm_notebook
@@ -13,11 +14,23 @@ from textacy.preprocess import preprocess_text
 stopwords = requests.get("https://raw.githubusercontent.com/masdevid/ID-Stopwords/master/id.stopwords.02.01.2016.txt").text.split("\n")
 
 nlp = id_aldo.load()
+nlp_ner = indo.load()
 
 class Scraper_Liputan():
 
     def __init__(self):
         self
+
+    def get_ner(self, all_data=None):
+        for i in range(len(all_data)):
+            doc = nlp_ner(all_data[i]['content'])
+            html = displacy.render(doc, style='ent', page=True)
+            html = html.replace('\n', '')
+            html = html.replace('<!DOCTYPE html><html>    <head>        <title>displaCy</title>    </head>    <body style="font-size: 16px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Helvetica, Arial, sans-serif, \'Apple Color Emoji\', \'Segoe UI Emoji\', \'Segoe UI Symbol\'; padding: 4rem 2rem;">','')
+            html = html.replace('</body></html>', '')
+            all_data[i]['ner_content'] = html
+
+        return all_data
 
     def ner_text(self, text=None):
         doc = nlp(text)
@@ -131,7 +144,8 @@ class Scraper_Liputan():
                                         "sub_category": subCategory,
                                         "publishedAt": date,
                                         "source" : 'liputan6.com',
-                                        "clean_content" : ''
+                                        "clean_content" : '',
+                                        "ner_content" : ''
                                     }
                                     all_data.append(data_json)
 
@@ -170,7 +184,8 @@ class Scraper_Liputan():
                                         "sub_category": subCategory,
                                         "publishedAt": date,
                                         "source" : 'liputan6.com',
-                                        "clean_content" : ''
+                                        "clean_content" : '',
+                                        "ner_content": ''
                                     }
                                     all_data.append(data_json)
 
@@ -212,7 +227,8 @@ class Scraper_Liputan():
                                         "sub_category": subCategory,
                                         "publishedAt": date,
                                         "source": 'liputan6.com',
-                                        "clean_content": ''
+                                        "clean_content": '',
+                                        "ner_content": ''
                                     }
                                     all_data.append(data_json)
 
@@ -252,7 +268,8 @@ class Scraper_Liputan():
                                         "sub_category": subCategory,
                                         "publishedAt": date,
                                         "source" : 'liputan6.com',
-                                        "clean_content" : ''
+                                        "clean_content" : '',
+                                        "ner_content": ''
                                     }
                                     all_data.append(data_json)
 
@@ -299,7 +316,8 @@ class Scraper_Liputan():
                                 "sub_category": subCategory,
                                 "publishedAt": date,
                                 "source" : 'liputan6.com',
-                                "clean_content" : ''
+                                "clean_content" : '',
+                                "ner_content": ''
                             }
                             all_data.append(data_json)
 
@@ -339,7 +357,8 @@ class Scraper_Liputan():
                                     "sub_category": subCategory,
                                     "publishedAt": date,
                                     "source": 'liputan6.com',
-                                    "clean_content": ''
+                                    "clean_content": '',
+                                    "ner_content": ''
                                 }
                                 all_data.append(data_json)
 
@@ -378,7 +397,8 @@ class Scraper_Liputan():
                                     "sub_category": subCategory,
                                     "publishedAt": date,
                                     "source" : 'liputan6.com',
-                                    "clean_content" : ''
+                                    "clean_content" : '',
+                                    "ner_content": ''
                                 }
                                 all_data.append(data_json)
 
@@ -392,6 +412,7 @@ class Scraper_Liputan():
         all_data = self.get_content2((all_data))
         all_data = self.clean_data(all_data)
         all_data = self.clean_content(all_data)
+        all_data = self.get_ner(all_data)
 
         return all_data
 

@@ -8,6 +8,12 @@ from tqdm import tqdm, tqdm_notebook
 from textacy.preprocess import preprocess_text
 
 nlp = id_aldo.load()
+# fopen = open('id.stopwords.02.01.2016.txt', 'r')
+#
+# stopwords = fopen.read()
+
+stopwords = requests.get("https://raw.githubusercontent.com/masdevid/ID-Stopwords/master/id.stopwords.02.01.2016.txt").text.split("\n")
+
 
 class Scraper_Kompas():
 
@@ -83,6 +89,31 @@ class Scraper_Kompas():
             if ad['content'] != '': all_data2.append(ad)
 
         return all_data2
+    
+    def get_content2(self, all_data=None):
+        print('Get Content...')
+        for i in tqdm(range(len(all_data))):
+            try:
+                temp = self.get_content(all_data[i]['url'])
+                all_data[i]['content'] = temp['content']
+                all_data[i]['img'] = temp['img']
+            except:
+                pass
+
+        return all_data
+
+    def clean_content(self, all_data=None):
+        print('Clean Content')
+        for i in tqdm(range(len(all_data))):
+            text_stopword = []
+            all_data[i]['clean_content'] = preprocess_text(all_data[i]['content'], lowercase=True, fix_unicode=True,no_punct=True)
+            clean_content = all_data[i]['clean_content'].split()
+
+            [text_stopword.append(cc) for cc in clean_content if cc not in stopwords]
+
+            all_data[i]['clean_content'] = ' '.join(text_stopword)
+
+        return all_data
 
 
     def get_dataMonth(self, global_category=None, name_category=None, tahun=None, bulan=None):
@@ -268,6 +299,7 @@ class Scraper_Kompas():
         all_data = self.get_dataDaily(category, name_category, year, month, day)
         all_data = self.get_content_fix((all_data))
         all_data = self.clean_data(all_data)
+        all_data = self.clean_content(all_data)
 
         return all_data
 
