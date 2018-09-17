@@ -11,7 +11,7 @@ list_category_tempo = ['nasional', 'pemilu', 'pilpres', 'dunia', 'bisnis', 'bola
 list_name_category_tempo = ['news', 'news', 'news', 'news', 'bisnis', 'sports', 'sports', 'entertainment', 'tekno', 'otomotif']
 
 #delete data from mongoDB
-db.delete_dataDaily('scraper', 'test', 'liputan6.com')
+db.delete_dataDaily('scraper', 'test', 'tempo.co')
 
 #Get Data
 for x,y in zip(list_category_tempo, list_name_category_tempo):

@@ -6,15 +6,15 @@ from bs4 import BeautifulSoup
 from tqdm import tqdm, tqdm_notebook
 from textacy.preprocess import preprocess_text
 
-
+nlp = id_aldo.load()
+nlp_ner = indo.load()
 # fopen = open('id.stopwords.02.01.2016.txt', 'r')
 #
 # stopwords = fopen.read()
 
-stopwords = requests.get("https://raw.githubusercontent.com/masdevid/ID-Stopwords/master/id.stopwords.02.01.2016.txt").text.split("\n")
+stopwords = requests.get(
+    "https://raw.githubusercontent.com/masdevid/ID-Stopwords/master/id.stopwords.02.01.2016.txt").text.split("\n")
 
-nlp = id_aldo.load()
-nlp_ner = indo.load()
 
 class Scraper_Tempo():
 
@@ -26,7 +26,9 @@ class Scraper_Tempo():
             doc = nlp_ner(all_data[i]['content'])
             html = displacy.render(doc, style='ent', page=True)
             html = html.replace('\n', '')
-            html = html.replace('<!DOCTYPE html><html>    <head>        <title>displaCy</title>    </head>    <body style="font-size: 16px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Helvetica, Arial, sans-serif, \'Apple Color Emoji\', \'Segoe UI Emoji\', \'Segoe UI Symbol\'; padding: 4rem 2rem;">','')
+            html = html.replace(
+                '<!DOCTYPE html><html>    <head>        <title>displaCy</title>    </head>    <body style="font-size: 16px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Helvetica, Arial, sans-serif, \'Apple Color Emoji\', \'Segoe UI Emoji\', \'Segoe UI Symbol\'; padding: 4rem 2rem;">',
+                '')
             html = html.replace('</body></html>', '')
             all_data[i]['ner_content'] = html
 
@@ -92,7 +94,8 @@ class Scraper_Tempo():
         print('Clean Content')
         for i in tqdm(range(len(all_data))):
             text_stopword = []
-            all_data[i]['clean_content'] = preprocess_text(all_data[i]['content'], lowercase=True, fix_unicode=True,no_punct=True)
+            all_data[i]['clean_content'] = preprocess_text(all_data[i]['content'], lowercase=True, fix_unicode=True,
+                                                           no_punct=True)
             clean_content = all_data[i]['clean_content'].split()
 
             [text_stopword.append(cc) for cc in clean_content if cc not in stopwords]
@@ -109,7 +112,7 @@ class Scraper_Tempo():
 
         return all_data2
 
-    def get_tempoDaily(self, category=None, name_category=None, day=None, month=None, year=None):
+    def get_tempoDaily(self, category=None, name_category=None, year=None, month=None, day=None):
 
         data = []
         if month <= 9:
