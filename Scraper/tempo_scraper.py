@@ -6,13 +6,15 @@ from bs4 import BeautifulSoup
 from tqdm import tqdm, tqdm_notebook
 from textacy.preprocess import preprocess_text
 
-nlp = id_aldo.load()
-nlp_ner = indo.load()
+
 # fopen = open('id.stopwords.02.01.2016.txt', 'r')
 #
 # stopwords = fopen.read()
 
 stopwords = requests.get("https://raw.githubusercontent.com/masdevid/ID-Stopwords/master/id.stopwords.02.01.2016.txt").text.split("\n")
+
+nlp = id_aldo.load()
+nlp_ner = indo.load()
 
 class Scraper_Tempo():
 
@@ -96,6 +98,8 @@ class Scraper_Tempo():
             [text_stopword.append(cc) for cc in clean_content if cc not in stopwords]
 
             all_data[i]['clean_content'] = ' '.join(text_stopword)
+
+        return all_data
 
     def clean_data(self, all_data=None):
         all_data2 = []

@@ -15,7 +15,7 @@ db.delete_dataDaily('scraper', 'test', 'liputan6.com')
 
 #Get Data
 for x,y in zip(list_category_tempo, list_name_category_tempo):
-    data = ST.get_tempoDaily(x, y, now.year, now.month, now.day)
+    data = ST.get_dataHarian(x, y, now.year, now.month, now.day)
 
     attr = []
     for i in range(len(data)):
