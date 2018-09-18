@@ -13,7 +13,7 @@ db = Database()
 now = datetime.datetime.now().date()
 
 
-for i in range(1):
+for i in range(31):
     data = SL.get_dataHarian('tekno', 'tekno', 2017, 1, i+1)
     attr = []
     for i in range(len(data)):
