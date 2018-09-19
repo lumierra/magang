@@ -24,10 +24,7 @@ class Scraper_Liputan():
     def get_ner(self, all_data=None):
         for i in range(len(all_data)):
             doc = nlp_ner(all_data[i]['content'])
-            html = displacy.render(doc, style='ent', page=True)
-            html = html.replace('\n', '')
-            html = html.replace('<!DOCTYPE html><html>    <head>        <title>displaCy</title>    </head>    <body style="font-size: 16px; font-family: -apple-system, BlinkMacSystemFont, \'Segoe UI\', Helvetica, Arial, sans-serif, \'Apple Color Emoji\', \'Segoe UI Emoji\', \'Segoe UI Symbol\'; padding: 4rem 2rem;">','')
-            html = html.replace('</body></html>', '')
+            html = displacy.render(doc, style='ent', minify=True)
             all_data[i]['ner_content'] = html
 
         return all_data

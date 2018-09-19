@@ -2,12 +2,14 @@ import spacy
 import id_aldo
 import requests
 import datetime
+import id_beritagar as indo
 from spacy import displacy
 from bs4 import BeautifulSoup
 from tqdm import tqdm, tqdm_notebook
 from textacy.preprocess import preprocess_text
 
 nlp = id_aldo.load()
+nlp_ner = indo.load()
 # fopen = open('id.stopwords.02.01.2016.txt', 'r')
 #
 # stopwords = fopen.read()
@@ -19,6 +21,14 @@ class Scraper_Kompas():
 
     def __init__(self):
         self
+
+    def get_ner(self, all_data=None):
+        for i in range(len(all_data)):
+            doc = nlp_ner(all_data[i]['content'])
+            html = displacy.render(doc, style='ent', minify=True)
+            all_data[i]['ner_content'] = html
+
+        return all_data
 
     def ner_text(self, text=None):
         doc = nlp(text)
@@ -89,7 +99,7 @@ class Scraper_Kompas():
             if ad['content'] != '': all_data2.append(ad)
 
         return all_data2
-    
+
     def get_content2(self, all_data=None):
         print('Get Content...')
         for i in tqdm(range(len(all_data))):
@@ -154,7 +164,9 @@ class Scraper_Kompas():
                                 "sub_category": temp_category,
                                 "publishedAt": temp_date,
                                 "source" : 'kompas.com',
-                                "clean_content": ''
+                                "clean_content": '',
+                                "ner_content" : ''
+
                             }
 
                             all_data.append(data_json)
@@ -194,7 +206,8 @@ class Scraper_Kompas():
                                         "sub_category": temp_category,
                                         "publishedAt": temp_date,
                                         "source" : 'kompas.com',
-                                        "clean_content": ''
+                                        "clean_content": '',
+                                        "ner_content": ''
                                     }
 
                                     all_data.append(data_json)
@@ -244,7 +257,8 @@ class Scraper_Kompas():
                         "sub_category": temp_category,
                         "publishedAt": temp_date,
                         "source" : 'kompas.com',
-                        "clean_content": ''
+                        "clean_content": '',
+                        "ner_content": ''
                     }
 
                     all_data.append(data_json)
@@ -283,7 +297,8 @@ class Scraper_Kompas():
                                 "sub_category": temp_category,
                                 "publishedAt": temp_date,
                                 "source": 'kompas.com',
-                                "clean_content": ''
+                                "clean_content": '',
+                                "ner_content": ''
                             }
 
                             all_data.append(data_json)
