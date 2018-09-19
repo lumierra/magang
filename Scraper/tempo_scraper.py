@@ -29,7 +29,6 @@ class Scraper_Tempo():
 
             PERSON, ORG, GPE, EVENT, MERK, PRODUCT = 0, 0, 0, 0, 0, 0
             for ent in doc.ents:
-                # print(ent.text, ent.label_, ent.start_char, ent.end_char)
                 if ent.label_ == 'PERSON':
                     PERSON += 1
                 elif ent.label_ == 'ORG':
@@ -63,7 +62,6 @@ class Scraper_Tempo():
                 data.append(u)
 
             for d in data:
-                print(d['text'], d['label'])
                 text = text.replace(d['text'],
                                     '''<mark class="{} mark-{}">{}<span class="span-{}">{}</span>'''.format(d['label'],d['label'],d['text'],d['label'],d['text']))
             text = ''.join(('''<div class="entities"> ''', text, ' </div>'))
