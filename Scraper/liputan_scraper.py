@@ -23,9 +23,49 @@ class Scraper_Liputan():
 
     def get_ner(self, all_data=None):
         for i in range(len(all_data)):
-            doc = nlp_ner(all_data[i]['content'])
-            html = displacy.render(doc, style='ent', minify=True)
-            all_data[i]['ner_content'] = html
+            text = all_data[i]['content']
+            text = text.replace('\n', '').replace('    ', '')
+            doc = nlp_ner(text)
+
+            PERSON, ORG, GPE, EVENT, MERK, PRODUCT = 0, 0, 0, 0, 0, 0
+            for ent in doc.ents:
+                if ent.label_ == 'PERSON':
+                    PERSON += 1
+                elif ent.label_ == 'ORG':
+                    ORG += 1
+                elif ent.label_ == 'GPE':
+                    GPE += 1
+                elif ent.label_ == 'EVENT':
+                    EVENT += 1
+                elif ent.label_ == 'MERK':
+                    MERK += 1
+                elif ent.label_ == 'PRODUCT':
+                    PRODUCT += 1
+
+            all_data[i]['count_ner']['person'] = PERSON
+            all_data[i]['count_ner']['org'] = ORG
+            all_data[i]['count_ner']['gpe'] = GPE
+            all_data[i]['count_ner']['event'] = EVENT
+            all_data[i]['count_ner']['merk'] = MERK
+            all_data[i]['count_ner']['product'] = PRODUCT
+
+            data = []
+            for ent in doc.ents:
+                data_json = {
+                    'text': ent.text,
+                    'label': ent.label_
+                }
+                data.append(data_json)
+            unique = {each['text']: each for each in data}.values()
+            data = []
+            for u in unique:
+                data.append(u)
+
+            for d in data:
+                text = text.replace(d['text'],
+                                    '''<mark class="{} mark-{}">{}<span class="span-{}">{}</span>'''.format(d['label'],d['label'],d['text'],d['label'],d['text']))
+            text = ''.join(('''<div class="entities"> ''', text, ' </div>'))
+            all_data[i]['ner_content'] = text
 
         return all_data
 
@@ -142,7 +182,15 @@ class Scraper_Liputan():
                                         "publishedAt": date,
                                         "source" : 'liputan6.com',
                                         "clean_content" : '',
-                                        "ner_content" : ''
+                                        "ner_content" : '',
+                                        'count_ner': {
+                                            'person': 0,
+                                            'org': 0,
+                                            'gpe': 0,
+                                            'event': 0,
+                                            'merk': 0,
+                                            'product': 0
+                                        }
                                     }
                                     all_data.append(data_json)
 
@@ -182,7 +230,15 @@ class Scraper_Liputan():
                                         "publishedAt": date,
                                         "source" : 'liputan6.com',
                                         "clean_content" : '',
-                                        "ner_content": ''
+                                        "ner_content": '',
+                                        'count_ner': {
+                                            'person': 0,
+                                            'org': 0,
+                                            'gpe': 0,
+                                            'event': 0,
+                                            'merk': 0,
+                                            'product': 0
+                                        }
                                     }
                                     all_data.append(data_json)
 
@@ -225,7 +281,15 @@ class Scraper_Liputan():
                                         "publishedAt": date,
                                         "source": 'liputan6.com',
                                         "clean_content": '',
-                                        "ner_content": ''
+                                        "ner_content": '',
+                                        'count_ner': {
+                                            'person': 0,
+                                            'org': 0,
+                                            'gpe': 0,
+                                            'event': 0,
+                                            'merk': 0,
+                                            'product': 0
+                                        }
                                     }
                                     all_data.append(data_json)
 
@@ -266,7 +330,15 @@ class Scraper_Liputan():
                                         "publishedAt": date,
                                         "source" : 'liputan6.com',
                                         "clean_content" : '',
-                                        "ner_content": ''
+                                        "ner_content": '',
+                                        'count_ner': {
+                                            'person': 0,
+                                            'org': 0,
+                                            'gpe': 0,
+                                            'event': 0,
+                                            'merk': 0,
+                                            'product': 0
+                                        }
                                     }
                                     all_data.append(data_json)
 
@@ -314,7 +386,15 @@ class Scraper_Liputan():
                                 "publishedAt": date,
                                 "source" : 'liputan6.com',
                                 "clean_content" : '',
-                                "ner_content": ''
+                                "ner_content": '',
+                                'count_ner': {
+                                    'person': 0,
+                                    'org': 0,
+                                    'gpe': 0,
+                                    'event': 0,
+                                    'merk': 0,
+                                    'product': 0
+                                }
                             }
                             all_data.append(data_json)
 
@@ -355,7 +435,15 @@ class Scraper_Liputan():
                                     "publishedAt": date,
                                     "source": 'liputan6.com',
                                     "clean_content": '',
-                                    "ner_content": ''
+                                    "ner_content": '',
+                                    'count_ner': {
+                                        'person': 0,
+                                        'org': 0,
+                                        'gpe': 0,
+                                        'event': 0,
+                                        'merk': 0,
+                                        'product': 0
+                                    }
                                 }
                                 all_data.append(data_json)
 
@@ -395,7 +483,15 @@ class Scraper_Liputan():
                                     "publishedAt": date,
                                     "source" : 'liputan6.com',
                                     "clean_content" : '',
-                                    "ner_content": ''
+                                    "ner_content": '',
+                                    'count_ner': {
+                                        'person': 0,
+                                        'org': 0,
+                                        'gpe': 0,
+                                        'event': 0,
+                                        'merk': 0,
+                                        'product': 0
+                                    }
                                 }
                                 all_data.append(data_json)
 
