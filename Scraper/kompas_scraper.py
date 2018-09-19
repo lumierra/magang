@@ -315,6 +315,7 @@ class Scraper_Kompas():
         all_data = self.get_content_fix((all_data))
         all_data = self.clean_data(all_data)
         all_data = self.clean_content(all_data)
+        all_data = self.get_ner(all_data)
 
         return all_data
 
