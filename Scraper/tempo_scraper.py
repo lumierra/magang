@@ -4,10 +4,12 @@ import id_beritagar as indo
 from spacy import displacy
 from bs4 import BeautifulSoup
 from tqdm import tqdm, tqdm_notebook
+from Database.dbMongo import Database
 from textacy.preprocess import preprocess_text
 
 nlp = id_aldo.load()
 nlp_ner = indo.load()
+db = Database()
 # fopen = open('id.stopwords.02.01.2016.txt', 'r')
 #
 # stopwords = fopen.read()
@@ -21,7 +23,14 @@ class Scraper_Tempo():
     def __init__(self):
         self
 
-    def get_ner(self, all_data=None):
+    def get_ner(self):
+
+        query = db.get_data('scraper', 'test', 'tempo.co')
+
+        all_data = []
+        for q in query:
+            all_data.append(q)
+
         for i in range(len(all_data)):
             text = all_data[i]['content']
             text = text.replace('\n', '').replace('    ', '')
@@ -63,11 +72,13 @@ class Scraper_Tempo():
 
             for d in data:
                 text = text.replace(d['text'],
-                                    '''<mark class="{} mark-{}">{}<span class="span-{}">{}</span>'''.format(d['label'],d['label'],d['text'],d['label'],d['text']))
+                                    '''<mark class="{label}-{_id} font-mark transparent style-{label}"> {text} </mark>'''.format(
+                                        _id=all_data[i]['_id'], label=d['label'], text=d['text']))
             text = ''.join(('''<div class="entities"> ''', text, ' </div>'))
             all_data[i]['ner_content'] = text
 
         return all_data
+
 
     def ner_text(self, text=None):
         doc = nlp(text)
@@ -202,6 +213,5 @@ class Scraper_Tempo():
         all_data = self.get_content2((all_data))
         all_data = self.clean_data(all_data)
         all_data = self.clean_content(all_data)
-        all_data = self.get_ner(all_data)
 
         return all_data

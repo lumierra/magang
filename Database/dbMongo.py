@@ -78,3 +78,38 @@ class Database():
                     'publishedAt': '{}-{}-{}'.format(day, month, year),
                     'source': source
                 })
+
+    def get_data(self, database=None, collection=None, source=None):
+        myclient = pymongo.MongoClient("mongodb://{}:{}".format(self.host, self.port))
+        mydb = myclient["{}".format(database)]
+        mycol = mydb["{}".format(collection)]
+
+        year = now.year
+        month = now.month
+        day = now.day
+
+        if month <= 9:
+            if day <= 9:
+                query = mycol.find({
+                    'publishedAt': '0{}-0{}-{}'.format(day, month, year),
+                    'source' : source
+                })
+            else:
+                query = mycol.find({
+                    'publishedAt': '{}-0{}-{}'.format(day, month, year),
+                    'source': source
+                })
+        else:
+            if day <= 9:
+                query = mycol.find({
+                    'publishedAt': '0{}-{}-{}'.format(day, month, year),
+                    'source': source
+                })
+            else:
+                query = mycol.find({
+                    'publishedAt': '{}-{}-{}'.format(day, month, year),
+                    'source': source
+                })
+
+        return query
+

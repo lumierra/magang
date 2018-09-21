@@ -23,10 +23,9 @@ for x,y in zip(list_category_tempo, list_name_category_tempo):
 
     db.insert_data('scraper', 'test', attr)
 
-# data = SL.main()
-#
-# attr = []
-# for i in range(len(data)):
-#     attr.append(data[i])
-#
-# db.insert_data('scraper', 'test', attr)
+data = ST.get_ner()
+attr = []
+for d in data:
+    attr.append(d)
+db.delete_dataDaily('scraper', 'test', 'tempo.co')
+db.insert_data('scraper', 'test', attr)

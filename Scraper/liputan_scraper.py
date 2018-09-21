@@ -62,8 +62,7 @@ class Scraper_Liputan():
                 data.append(u)
 
             for d in data:
-                text = text.replace(d['text'],
-                                    '''<mark class="{} mark-{}">{}<span class="span-{}">{}</span>'''.format(d['label'],d['label'],d['text'],d['label'],d['text']))
+                text = text.replace(d['text'],'''<mark class="{label}-{_id} font-mark transparent style-{label}"> {text} <span class="span-{label} font-span"> {label} </span></mark>'''.format(text=d['text'], url=all_data[i]['_id'], label=d['label']))
             text = ''.join(('''<div class="entities"> ''', text, ' </div>'))
             all_data[i]['ner_content'] = text
 
@@ -505,7 +504,7 @@ class Scraper_Liputan():
         all_data = self.get_content2((all_data))
         all_data = self.clean_data(all_data)
         all_data = self.clean_content(all_data)
-        all_data = self.get_ner(all_data)
+        # all_data = self.get_ner(all_data)
 
         return all_data
 
