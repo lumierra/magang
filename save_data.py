@@ -28,7 +28,7 @@ for x,y in zip(list_category_liputan, list_name_category_liputan):
 
     db.insert_data('scraper', 'test', attr)
 
-data = ST.get_ner2()
+data = ST.get_ner()
 attr = []
 for d in data:
     attr.append(d)

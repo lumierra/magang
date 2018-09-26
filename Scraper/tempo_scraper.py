@@ -106,11 +106,11 @@ class Scraper_Tempo():
         contents = soup.select('#isi > p')
 
         for content in contents:
-            if content.text.strip()[:10] != 'Baca juga:':
-                data.append(content.text.strip())
+            if content.text.strip()[:10] != 'Baca juga:' and content.text.strip()[:4] != 'Baca:':
+                data.append(content.text.strip() + '\n\n')
 
         p = ''.join(data)
-        p = preprocess_text(p, fix_unicode=True)
+        # p = preprocess_text(p, fix_unicode=True)
         p = self.ner_text(p)
 
         data_json = {
