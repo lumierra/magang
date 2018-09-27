@@ -4,6 +4,7 @@ import id_beritagar as indo
 from spacy import displacy
 from bs4 import BeautifulSoup
 from tqdm import tqdm, tqdm_notebook
+from Database.dbMongo import Database
 from textacy.preprocess import preprocess_text
 
 
@@ -15,13 +16,20 @@ stopwords = requests.get("https://raw.githubusercontent.com/masdevid/ID-Stopword
 
 nlp = id_aldo.load()
 nlp_ner = indo.load()
+db = Database()
 
 class Scraper_Liputan():
 
     def __init__(self):
         self
 
-    def get_ner(self, all_data=None):
+    def get_ner(self):
+
+        query = db.get_data('scraper', 'test', 'liputan6.com')
+
+        all_data = []
+        for q in query:
+            all_data.append(q)
 
         for i in range(len(all_data)):
             text = all_data[i]['content'].split('\n')
@@ -66,9 +74,12 @@ class Scraper_Liputan():
                 data.append(u)
 
             for d in data:
-                text = text.replace(d['text'],'''<mark class="{label}-{_id} font-mark transparent style-{label}"> {text} <span class="span-{label} font-span"> {label} </span></mark>'''.format(text=d['text'], url=all_data[i]['_id'], label=d['label']))
+                text = text.replace(d['text'],
+                                    '''<mark class="{label}-{_id} font-mark transparent style-{label}"> {text} </mark>'''.format(
+                                        _id=all_data[i]['_id'], label=d['label'], text=d['text']))
             text = ''.join(('''<div class="entities"> ''', text, ' </div>'))
             text = text.split('\n')
+
             all_data[i]['ner_content'] = text
 
         return all_data
@@ -102,7 +113,7 @@ class Scraper_Liputan():
                     and contents[i].text.strip()[:8] != 'Reporter' and contents[i].text.strip()[:14] != 'Saksikan video'\
                     and contents[i].text.strip()[:1] != '(' and contents[i].text.strip()[:14] != 'Saksikan Video' \
                     and contents[i].text.strip()[:2] != ' (' and contents[i].text.strip()[:7] != 'Sumber:':
-                data.append(contents[i].text.strip())
+                data.append(contents[i].text.strip() + '\n\n')
 
         con = ''.join(data)
         con = preprocess_text(con, fix_unicode=True)
@@ -110,7 +121,6 @@ class Scraper_Liputan():
         con2 = ''.join(data)
         con2 = self.ner_text(con2)
         con2 = con2.split('\n\n')
-
 
         data_json = {
             "img": img,
@@ -517,7 +527,6 @@ class Scraper_Liputan():
         all_data = self.get_content2((all_data))
         all_data = self.clean_data(all_data)
         all_data = self.clean_content(all_data)
-        # all_data = self.get_ner(all_data)
 
         return all_data
 

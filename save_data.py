@@ -12,15 +12,42 @@ SK = Scraper_Kompas()
 db = Database()
 now = datetime.datetime.now().date()
 
+
+##### TEMPO #########
+# #delete data from mongoDB
+# db.delete_dataDaily('scraper', 'test', 'tempo.co')
+#
+# list_category_liputan = ['tekno']
+# list_name_category_liputan = ['tekno']
+#
+# # Get Data
+# for x,y in zip(list_category_liputan, list_name_category_liputan):
+#     data = ST.get_dataHarian(x, y, now.year, now.month, now.day)
+#
+#     attr = []
+#     for i in range(len(data)):
+#         attr.append(data[i])
+#
+#     db.insert_data('scraper', 'test', attr)
+#
+# data = ST.get_ner()
+# attr = []
+# for d in data:
+#     attr.append(d)
+# db.delete_dataDaily('scraper', 'test', 'tempo.co')
+# db.insert_data('scraper', 'test', attr)
+
+
+###### LIPUTAN6 ########
 #delete data from mongoDB
-db.delete_dataDaily('scraper', 'test', 'tempo.co')
+db.delete_dataDaily('scraper', 'test', 'liputan6.com')
 
 list_category_liputan = ['tekno']
 list_name_category_liputan = ['tekno']
 
 # Get Data
 for x,y in zip(list_category_liputan, list_name_category_liputan):
-    data = ST.get_dataHarian(x, y, now.year, now.month, now.day)
+    data = SL.get_dataHarian(x, y, now.year, now.month, now.day)
 
     attr = []
     for i in range(len(data)):
@@ -28,9 +55,9 @@ for x,y in zip(list_category_liputan, list_name_category_liputan):
 
     db.insert_data('scraper', 'test', attr)
 
-data = ST.get_ner()
+data = SL.get_ner()
 attr = []
 for d in data:
     attr.append(d)
-db.delete_dataDaily('scraper', 'test', 'tempo.co')
+db.delete_dataDaily('scraper', 'test', 'liputan6.com')
 db.insert_data('scraper', 'test', attr)
