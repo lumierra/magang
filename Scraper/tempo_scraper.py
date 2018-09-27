@@ -32,8 +32,11 @@ class Scraper_Tempo():
             all_data.append(q)
 
         for i in range(len(all_data)):
-            text = all_data[i]['content']
-            text = text.replace('\n', '').replace('    ', '')
+            text = all_data[i]['content'].split('\n')
+            temp = []
+            for t in text:
+                temp.append(t + '\n')
+            text = ''.join(temp)
             doc = nlp_ner(text)
 
             PERSON, ORG, GPE, EVENT, MERK, PRODUCT = 0, 0, 0, 0, 0, 0
@@ -75,6 +78,8 @@ class Scraper_Tempo():
                                     '''<mark class="{label}-{_id} font-mark transparent style-{label}"> {text} </mark>'''.format(
                                         _id=all_data[i]['_id'], label=d['label'], text=d['text']))
             text = ''.join(('''<div class="entities"> ''', text, ' </div>'))
+            text = text.split('\n')
+
             all_data[i]['ner_content'] = text
 
         return all_data
@@ -106,17 +111,21 @@ class Scraper_Tempo():
         contents = soup.select('#isi > p')
 
         for content in contents:
-            if content.text.strip()[:10] != 'Baca juga:' and content.text.strip()[:4] != 'Baca:':
+            if content.text.strip()[:10] != 'Baca juga:' and content.text.strip()[:5] != 'Baca:':
                 data.append(content.text.strip() + '\n\n')
 
-        p = ''.join(data)
-        # p = preprocess_text(p, fix_unicode=True)
-        p = self.ner_text(p)
+        con = ''.join(data)
+        con= preprocess_text(con, fix_unicode=True)
+        con = self.ner_text(con)
+        con2 = ''.join(data)
+        con2 = self.ner_text(con2)
+        con2 = con2.split('\n\n')
 
         data_json = {
             "sub_category": sub_category,
             "img": img,
-            "content": p,
+            "content": con,
+            "content_html": con2
         }
 
         return data_json
@@ -128,6 +137,7 @@ class Scraper_Tempo():
             try:
                 temp = self.get_content(all_data[i]['url'])
                 all_data[i]['content'] = temp['content']
+                all_data[i]['content_html'] = temp['content_html']
                 all_data[i]['img'] = temp['img']
                 all_data[i]['sub_category'] = temp['sub_category']
                 all_data[i]['description'] = all_data[i]['title'] + ' ' + all_data[i]['content'][:255] + '....'
@@ -188,6 +198,7 @@ class Scraper_Tempo():
                 'description': '',
                 'url': url_lokal,
                 'content': '',
+                'content_html': '',
                 'img': '',
                 'sub_category': '',
                 'publishedAt': date,
