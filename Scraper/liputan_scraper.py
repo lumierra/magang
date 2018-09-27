@@ -22,9 +22,13 @@ class Scraper_Liputan():
         self
 
     def get_ner(self, all_data=None):
+
         for i in range(len(all_data)):
-            text = all_data[i]['content']
-            text = text.replace('\n', '').replace('    ', '')
+            text = all_data[i]['content'].split('\n')
+            temp = []
+            for t in text:
+                temp.append(t + '\n')
+            text = ''.join(temp)
             doc = nlp_ner(text)
 
             PERSON, ORG, GPE, EVENT, MERK, PRODUCT = 0, 0, 0, 0, 0, 0
@@ -64,6 +68,7 @@ class Scraper_Liputan():
             for d in data:
                 text = text.replace(d['text'],'''<mark class="{label}-{_id} font-mark transparent style-{label}"> {text} <span class="span-{label} font-span"> {label} </span></mark>'''.format(text=d['text'], url=all_data[i]['_id'], label=d['label']))
             text = ''.join(('''<div class="entities"> ''', text, ' </div>'))
+            text = text.split('\n')
             all_data[i]['ner_content'] = text
 
         return all_data
@@ -98,13 +103,19 @@ class Scraper_Liputan():
                     and contents[i].text.strip()[:1] != '(' and contents[i].text.strip()[:14] != 'Saksikan Video' \
                     and contents[i].text.strip()[:2] != ' (' and contents[i].text.strip()[:7] != 'Sumber:':
                 data.append(contents[i].text.strip())
-        p = ''.join(data)
-        p = preprocess_text(p, fix_unicode=True)
-        p =  self.ner_text(p)
+
+        con = ''.join(data)
+        con = preprocess_text(con, fix_unicode=True)
+        con = self.ner_text(con)
+        con2 = ''.join(data)
+        con2 = self.ner_text(con2)
+        con2 = con2.split('\n\n')
+
 
         data_json = {
             "img": img,
-            "content": p,
+            "content": con,
+            "content_html": con2
         }
         return data_json
 
@@ -115,6 +126,7 @@ class Scraper_Liputan():
                 temp = self.get_content(all_data[i]['url'])
                 all_data[i]['content'] = temp['content']
                 all_data[i]['img'] = temp['img']
+                all_data[i]['content_html'] = temp['content_html']
             except:
                 pass
 
@@ -176,6 +188,7 @@ class Scraper_Liputan():
                                         "description": description,
                                         "url": url_lokal,
                                         "content": '',
+                                        "content_html": '',
                                         "img": '',
                                         "sub_category": subCategory,
                                         "publishedAt": date,
