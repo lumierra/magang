@@ -219,6 +219,61 @@ class Scraper_Tempo():
 
         return data
 
+    def get_tempoMonthly(self, category=None, name_category=None, year=None, month=None):
+
+        data = []
+        for i in tqdm(range(31), desc='Get Data'):
+            try:
+                if month <= 9:
+                    if i + 1 <= 9:
+                        url = '''https://www.tempo.co/indeks/{}/0{}/0{}/{}'''.format(year, month, i + 1, category)
+                    else:
+                        url = '''https://www.tempo.co/indeks/{}/0{}/{}/{}'''.format(year, month, i + 1, category)
+                else:
+                    if i + 1 <= 9:
+                        url = '''https://www.tempo.co/indeks/{}/{}/0{}/{}'''.format(year, month, i + 1, category)
+                    else:
+                        url = '''https://www.tempo.co/indeks/{}/{}/{}/{}'''.format(year, month, i + 1, category)
+
+                #             print(url)
+                response = requests.get(url).text
+                soup = BeautifulSoup(response, "html5lib")
+                contents = soup.select('.list.list-type-1 > ul > li')
+
+                for i in range(len(contents)):
+                    url_lokal = contents[i].select_one('a')['href']
+                    title = contents[i].select_one('.title').text
+                    date = url.split('/')[6] + '-' + url.split('/')[5] + '-' + url.split('/')[4]
+
+                    data_json = {
+                        'category': name_category,
+                        'title': title,
+                        'description': '',
+                        'url': url_lokal,
+                        'content': '',
+                        'content_html': '',
+                        'img': '',
+                        'sub_category': '',
+                        'publishedAt': date,
+                        'source': 'tempo.co',
+                        'clean_content': '',
+                        'ner_content': '',
+                        'count_ner': {
+                            'person': 0,
+                            'org': 0,
+                            'gpe': 0,
+                            'event': 0,
+                            'merk': 0,
+                            'product': 0
+                        }
+                    }
+
+                    data.append(data_json)
+            except:
+                pass
+
+        return data
+
     def get_dataHarian(self, category=None, name_category=None, year=None, month=None, day=None):
         all_data = self.get_tempoDaily(category, name_category, year, month, day)
         all_data = self.get_content2((all_data))
