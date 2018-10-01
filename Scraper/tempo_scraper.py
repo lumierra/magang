@@ -23,9 +23,12 @@ class Scraper_Tempo():
     def __init__(self):
         self
 
-    def get_ner(self):
+    def get_ner(self, status=None):
 
-        query = db.get_data('scraper', 'test', 'tempo.co')
+        if status == 'harian':
+            query = db.get_data('scraper', 'test', 'tempo.co')
+        else:
+            query = db.get_dataMonthly('scraper', 'test2', 'tempo.co', '10', '2018')
 
         all_data = []
         for q in query:

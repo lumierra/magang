@@ -128,7 +128,7 @@ class Database():
 
         return query
 
-    def get_dataMonthly(self, database=None, collection=None, source=None, year=None, month=None):
+    def get_dataMonthly(self, database=None, collection=None, source=None, month=None, year=None):
         myclient = pymongo.MongoClient("mongodb://{}:{}".format(self.host, self.port))
         mydb = myclient["{}".format(database)]
         mycol = mydb["{}".format(collection)]

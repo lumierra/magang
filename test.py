@@ -22,7 +22,7 @@ for x,y in zip(list_category_tempo, list_name_category_tempo):
 
     db.insert_data('scraper', 'test2', attr)
 
-# data = ST.get_ner()
+# data = ST.get_ner('bulanan')
 # attr = []
 # for d in data:
 #     attr.append(d)
