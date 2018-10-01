@@ -1,4 +1,3 @@
-import spacy
 import id_aldo
 import requests
 import datetime
@@ -91,58 +90,51 @@ class Scraper_Kompas():
 
         return result
 
-
     def get_content(self, url=None):
-        try:
-            response = requests.get(url).text
-            soup = BeautifulSoup(response, "html5lib")
+        response = requests.get(url).text
+        soup = BeautifulSoup(response, "html5lib")
 
-            contents = soup.select_one('.photo > img')
-            contents2 = soup.select('.read__content > p')
+        contents = soup.select_one('.photo > img')
+        contents2 = soup.select('.read__content > p')
 
-            temp_img = contents['src']
+        temp_img = contents['src']
 
-            data = []
-            for i in range(len(contents2)):
-                if contents2[i].text != '':
-                    if (contents2[i].text[:9] != 'Baca juga' and contents2[i].text[:5] != 'Baca:') \
-                            and (contents2[i].text[:15] != 'We are thrilled') and (contents2[i].text[:6] != 'Flinke'):
-                        data.append(contents2[i].text)
+        data = []
+        for i in range(len(contents2)):
+            if contents2[i].text != '':
+                if (contents2[i].text[:9] != 'Baca juga' and contents2[i].text[:5] != 'Baca:') \
+                        and (contents2[i].text[:15] != 'We are thrilled') and (contents2[i].text[:6] != 'Flinke'):
+                    data.append(contents2[i].text)
 
-            p = ''.join(data)
-            p = preprocess_text(p, fix_unicode=True)
-            p = self.ner_text(p)
+        con = ''.join(data)
+        con = preprocess_text(con, fix_unicode=True)
+        con = self.ner_text(con)
+        con2 = ''.join(data)
+        con2 = self.ner_text(con2)
+        con2 = con2.split('\n\n')
 
-            data_json = {
-                "img": temp_img,
-                "content": p,
-            }
-        except:
-            pass
+        data_json = {
+            "img": temp_img,
+            "content": con,
+            "content_html": con2
+        }
 
         return data_json
 
-    def get_content_fix(self, all_data=None):
+    def get_content2(self, all_data=None):
         for i in tqdm(range(len(all_data))):
             try:
                 temp = self.get_content(all_data[i]['url'])
                 all_data[i]['content'] = temp['content']
+                all_data[i]['content_html'] = temp['content_html']
                 all_data[i]['img'] = temp['img']
             except:
                 pass
 
         return all_data
 
-    def clean_data(self, all_data=None):
-        all_data2 = []
-        for ad in all_data:
-            if ad['content'] != '': all_data2.append(ad)
-
-        return all_data2
-
     def get_content2(self, all_data=None):
-        print('Get Content...')
-        for i in tqdm(range(len(all_data))):
+        for i in tqdm(range(len(all_data)), desc='Get Content'):
             try:
                 temp = self.get_content(all_data[i]['url'])
                 all_data[i]['content'] = temp['content']
@@ -153,8 +145,7 @@ class Scraper_Kompas():
         return all_data
 
     def clean_content(self, all_data=None):
-        print('Clean Content')
-        for i in tqdm(range(len(all_data))):
+        for i in tqdm(range(len(all_data)), desc='Clean Content'):
             text_stopword = []
             all_data[i]['clean_content'] = preprocess_text(all_data[i]['content'], lowercase=True, fix_unicode=True,no_punct=True)
             clean_content = all_data[i]['clean_content'].split()
@@ -165,6 +156,13 @@ class Scraper_Kompas():
 
         return all_data
 
+    def clean_data(self, all_data=None):
+        all_data2 = []
+        for ad in all_data:
+            if ad['content'] != '':
+                all_data2.append(ad)
+
+        return all_data2
 
     def get_dataMonth(self, global_category=None, name_category=None, tahun=None, bulan=None):
         all_data = []
@@ -200,12 +198,21 @@ class Scraper_Kompas():
                                 "description": '',
                                 "url": temp_url,
                                 "content": '',
+                                "content_html": '',
                                 "img": '',
                                 "sub_category": temp_category,
                                 "publishedAt": temp_date,
-                                "source" : 'kompas.com',
+                                "source": 'kompas.com',
                                 "clean_content": '',
-                                "ner_content" : ''
+                                "ner_content": '',
+                                'count_ner': {
+                                    'person': 0,
+                                    'org': 0,
+                                    'gpe': 0,
+                                    'event': 0,
+                                    'merk': 0,
+                                    'product': 0
+                                }
 
                             }
 
@@ -214,7 +221,6 @@ class Scraper_Kompas():
                         except:
                             pass
                 else:
-
                     total_page = int(count_page[len(count_page) - 1].select('.paging__link')[0]['data-ci-pagination-page'])
 
                     for y in range(total_page):
@@ -242,12 +248,21 @@ class Scraper_Kompas():
                                         "description": '',
                                         "url": temp_url,
                                         "content": '',
+                                        "content_html": '',
                                         "img": '',
                                         "sub_category": temp_category,
                                         "publishedAt": temp_date,
-                                        "source" : 'kompas.com',
+                                        "source": 'kompas.com',
                                         "clean_content": '',
-                                        "ner_content": ''
+                                        "ner_content": '',
+                                        'count_ner': {
+                                            'person': 0,
+                                            'org': 0,
+                                            'gpe': 0,
+                                            'event': 0,
+                                            'merk': 0,
+                                            'product': 0
+                                        }
                                     }
 
                                     all_data.append(data_json)
@@ -260,7 +275,6 @@ class Scraper_Kompas():
                 pass
 
         return all_data
-
 
     def get_dataDaily(self, global_category=None, name_category=None, tahun=None, bulan=None, tanggal=None):
         all_data = []
@@ -293,12 +307,21 @@ class Scraper_Kompas():
                         "description": '',
                         "url": temp_url,
                         "content": '',
+                        "content_html": '',
                         "img": '',
                         "sub_category": temp_category,
                         "publishedAt": temp_date,
-                        "source" : 'kompas.com',
+                        "source": 'kompas.com',
                         "clean_content": '',
-                        "ner_content": ''
+                        "ner_content": '',
+                        'count_ner': {
+                            'person': 0,
+                            'org': 0,
+                            'gpe': 0,
+                            'event': 0,
+                            'merk': 0,
+                            'product': 0
+                        }
                     }
 
                     all_data.append(data_json)
@@ -333,12 +356,21 @@ class Scraper_Kompas():
                                 "description": '',
                                 "url": temp_url,
                                 "content": '',
+                                "content_html": '',
                                 "img": '',
                                 "sub_category": temp_category,
                                 "publishedAt": temp_date,
                                 "source": 'kompas.com',
                                 "clean_content": '',
-                                "ner_content": ''
+                                "ner_content": '',
+                                'count_ner': {
+                                    'person': 0,
+                                    'org': 0,
+                                    'gpe': 0,
+                                    'event': 0,
+                                    'merk': 0,
+                                    'product': 0
+                                }
                             }
 
                             all_data.append(data_json)
@@ -352,13 +384,12 @@ class Scraper_Kompas():
 
     def get_dataHarian(self, category=None, name_category=None, year=None, month=None, day=None):
         all_data = self.get_dataDaily(category, name_category, year, month, day)
-        all_data = self.get_content_fix((all_data))
+        all_data = self.get_content2((all_data))
         all_data = self.clean_data(all_data)
         all_data = self.clean_content(all_data)
         all_data = self.get_ner(all_data)
 
         return all_data
-
 
 
     def main(self):
