@@ -2,15 +2,27 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="28108628-4e2f-4310-93ca-ce9afbc16ebe" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Scraper/kompas_scraper.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scraper/kompas_scraper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scraper/liputan_scraper.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scraper/liputan_scraper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Scraper/tempo_scraper.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scraper/tempo_scraper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/liputanHarian.py" beforeDir="false" afterPath="$PROJECT_DIR$/liputanHarian.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
   </component>
   <component name="FUSProjectUsageTrigger">
     <session id="-588292280">
@@ -29,14 +41,14 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="LICENSE" value="1" />
-          <entry key="py" value="60" />
+          <entry key="py" value="63" />
           <entry key="yml" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="PLAIN_TEXT" value="1" />
-          <entry key="Python" value="60" />
+          <entry key="Python" value="63" />
           <entry key="YAML" value="1" />
         </counts>
       </usages-collector>
@@ -59,14 +71,37 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Scraper/tempo_scraper.py">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tempoHarian.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="355" column="66" selection-start-line="355" selection-start-column="66" selection-end-line="355" selection-end-column="66" />
+            <state relative-caret-position="-29">
+              <caret line="14" column="10" lean-forward="true" selection-start-line="14" selection-start-column="10" selection-end-line="14" selection-end-column="10" />
               <folding>
-                <element signature="e#0#14#0" expanded="true" />
-                <marker date="1538385908205" expanded="true" signature="619:2873" ph="..." />
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/liputanHarian.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="26" column="19" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="19" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/kompasHarian.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="29" column="39" lean-forward="true" selection-start-line="29" selection-start-column="39" selection-end-line="29" selection-end-column="39" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -98,11 +133,11 @@
         <option value="$PROJECT_DIR$/Database/dbMongo.py" />
         <option value="$PROJECT_DIR$/tempoHarian.py" />
         <option value="$PROJECT_DIR$/test.py" />
-        <option value="$PROJECT_DIR$/liputanHarian.py" />
         <option value="$PROJECT_DIR$/kompasHarian.py" />
         <option value="$PROJECT_DIR$/Scraper/kompas_scraper.py" />
         <option value="$PROJECT_DIR$/Scraper/liputan_scraper.py" />
         <option value="$PROJECT_DIR$/Scraper/tempo_scraper.py" />
+        <option value="$PROJECT_DIR$/liputanHarian.py" />
       </list>
     </option>
   </component>
@@ -188,10 +223,10 @@
     <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" sideWeight="0.50247526" side_tool="true" weight="0.2659091" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.49752474" visible="true" weight="0.275" />
+      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.49752474" visible="true" weight="0.275" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Database Changes" order="0" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="1" visible="true" weight="0.4152824" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="1" visible="true" weight="0.4152824" />
       <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="3" show_stripe_button="false" />
       <window_info anchor="bottom" id="Python Console" order="4" />
@@ -203,9 +238,9 @@
       <window_info anchor="bottom" id="Cvs" order="10" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="11" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="12" />
-      <window_info anchor="right" id="Database" order="0" />
+      <window_info anchor="right" id="Database" order="0" weight="0.32954547" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="1" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="SciView" order="2" />
+      <window_info anchor="right" id="SciView" order="2" weight="0.32954547" />
       <window_info anchor="right" id="Ant Build" order="3" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="4" weight="0.25" />
     </layout>
@@ -250,38 +285,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/liputanHarian.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="26" selection-start-line="26" selection-end-line="31" selection-end-column="39" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/LICENSE">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/kompasHarian.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="27" column="18" lean-forward="true" selection-start-line="27" selection-start-column="18" selection-end-line="27" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tempoHarian.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-74">
-          <caret line="11" selection-start-line="11" selection-end-line="12" selection-end-column="50" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Scraper/kompas_scraper.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -308,11 +313,41 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Scraper/tempo_scraper.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="355" column="66" selection-start-line="355" selection-start-column="66" selection-end-line="355" selection-end-column="66" />
+        <state relative-caret-position="181">
+          <caret line="325" lean-forward="true" selection-start-line="325" selection-end-line="325" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
             <marker date="1538385908205" expanded="true" signature="619:2873" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tempoHarian.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-29">
+          <caret line="14" column="10" lean-forward="true" selection-start-line="14" selection-start-column="10" selection-end-line="14" selection-end-column="10" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/liputanHarian.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="26" column="19" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/kompasHarian.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="29" column="39" lean-forward="true" selection-start-line="29" selection-start-column="39" selection-end-line="29" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
