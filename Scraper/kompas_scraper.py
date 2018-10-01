@@ -3,10 +3,12 @@ import requests
 import datetime
 import id_beritagar as indo
 from spacy import displacy
+from Database.dbMongo import Database
 from bs4 import BeautifulSoup
 from tqdm import tqdm, tqdm_notebook
 from textacy.preprocess import preprocess_text
 
+db = Database()
 nlp = id_aldo.load()
 nlp_ner = indo.load()
 # fopen = open('id.stopwords.02.01.2016.txt', 'r')
@@ -22,9 +24,19 @@ class Scraper_Kompas():
         self
 
     def get_ner(self, all_data=None):
+
+        query = db.get_data('scraper', 'test', 'kompas.com')
+
+        all_data = []
+        for q in query:
+            all_data.append(q)
+
         for i in range(len(all_data)):
-            text = all_data[i]['content']
-            text = text.replace('\n', '').replace('    ', '')
+            text = all_data[i]['content'].split('\n')
+            temp = []
+            for t in text:
+                temp.append(t + '\n')
+            text = ''.join(temp)
             doc = nlp_ner(text)
 
             PERSON, ORG, GPE, EVENT, MERK, PRODUCT = 0, 0, 0, 0, 0, 0
@@ -65,6 +77,7 @@ class Scraper_Kompas():
                 text = text.replace(d['text'],
                                     '''<mark class="{} mark-{}">{}<span class="span-{}">{}</span>'''.format(d['label'],d['label'],d['text'],d['label'],d['text']))
             text = ''.join(('''<div class="entities"> ''', text, ' </div>'))
+            text = text.split('\n')
             all_data[i]['ner_content'] = text
 
         return all_data
@@ -104,7 +117,7 @@ class Scraper_Kompas():
             if contents2[i].text != '':
                 if (contents2[i].text[:9] != 'Baca juga' and contents2[i].text[:5] != 'Baca:') \
                         and (contents2[i].text[:15] != 'We are thrilled') and (contents2[i].text[:6] != 'Flinke'):
-                    data.append(contents2[i].text)
+                    data.append(contents2[i].text  + '\n\n')
 
         con = ''.join(data)
         con = preprocess_text(con, fix_unicode=True)
@@ -128,6 +141,7 @@ class Scraper_Kompas():
                 all_data[i]['content'] = temp['content']
                 all_data[i]['content_html'] = temp['content_html']
                 all_data[i]['img'] = temp['img']
+                all_data[i]['description'] = all_data[i]['title'] + ' ' + all_data[i]['content'][:255] + '....'
             except:
                 pass
 
@@ -173,7 +187,7 @@ class Scraper_Kompas():
                     contents = soup.select('.article__list.clearfix')
                     print(url_lokal)
 
-                    for content in (contents):
+                    for content in contents:
                         try:
                             temp_category = content.select_one('.article__subtitle').text.strip()
                             temp_url = content.select_one('.article__link')['href']
