@@ -36,16 +36,35 @@ class Database():
         except:
             print('Insert Data into MongoDB Failed')
 
-    def find_data(self, database=None, collection=None):
+    def delete_by_request(self, database=None, collection=None, source=None, day=None, month=None, year=None):
         myclient = pymongo.MongoClient("mongodb://{}:{}".format(self.host, self.port))
         mydb = myclient["{}".format(database)]
         mycol = mydb["{}".format(collection)]
 
-        query = {
-            "category": "otomotif"
-        }
+        if month <= 9:
+            if day <= 9:
+                query = mycol.remove({
+                    'publishedAt': '0{}-0{}-{}'.format(day, month, year),
+                    'source' : source
+                })
+            else:
+                query = mycol.remove({
+                    'publishedAt': '{}-0{}-{}'.format(day, month, year),
+                    'source': source
+                })
+        else:
+            if day <= 9:
+                query = mycol.remove({
+                    'publishedAt': '0{}-{}-{}'.format(day, month, year),
+                    'source': source
+                })
+            else:
+                query = mycol.remove({
+                    'publishedAt': '{}-{}-{}'.format(day, month, year),
+                    'source': source
+                })
 
-        doc = mycol.delete_many(query)
+        return query
 
     def delete_dataDaily(self, database=None, collection=None, source=None):
         myclient = pymongo.MongoClient("mongodb://{}:{}".format(self.host, self.port))
@@ -53,7 +72,7 @@ class Database():
         mycol = mydb["{}".format(collection)]
 
         year = now.year
-        month = now.month
+        month = now.months
         day = now.day
 
         if month <= 9:
@@ -78,6 +97,8 @@ class Database():
                     'publishedAt': '{}-{}-{}'.format(day, month, year),
                     'source': source
                 })
+
+        return query
 
     def delete_dataMonthly(self, database=None, collection=None, source=None, month=None, year=None):
         myclient = pymongo.MongoClient("mongodb://{}:{}".format(self.host, self.port))
