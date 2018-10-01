@@ -23,12 +23,14 @@ class Scraper_Tempo():
     def __init__(self):
         self
 
-    def get_ner(self, status=None):
+    def get_ner(self, status=None, database=None, collection=None, source=None):
 
-        if status == 'harian':
-            query = db.get_data('scraper', 'test', 'tempo.co')
-        else:
-            query = db.get_dataMonthly('scraper', 'test2', 'tempo.co', '10', '2018')
+        # if status == 'harian':
+        #     query = db.get_data(database, collection, source)
+        # else:
+        #     query = db.get_dataMonthly('scraper', 'test2', 'tempo.co', '10', '2018')
+
+        query = db.get_data(database, collection, source)
 
         all_data = []
         for q in query:
@@ -87,6 +89,66 @@ class Scraper_Tempo():
 
         return all_data
 
+    def get_ner2(self, status=None, database=None, collection=None, source=None, day=None, month=None, year=None):
+
+        query = db.get_dataByRequest(database, collection, source, day, month, year)
+
+        all_data = []
+        for q in query:
+            all_data.append(q)
+
+        for i in range(len(all_data)):
+            text = all_data[i]['content'].split('\n')
+            temp = []
+            for t in text:
+                temp.append(t + '\n')
+            text = ''.join(temp)
+            doc = nlp_ner(text)
+
+            PERSON, ORG, GPE, EVENT, MERK, PRODUCT = 0, 0, 0, 0, 0, 0
+            for ent in doc.ents:
+                if ent.label_ == 'PERSON':
+                    PERSON += 1
+                elif ent.label_ == 'ORG':
+                    ORG += 1
+                elif ent.label_ == 'GPE':
+                    GPE += 1
+                elif ent.label_ == 'EVENT':
+                    EVENT += 1
+                elif ent.label_ == 'MERK':
+                    MERK += 1
+                elif ent.label_ == 'PRODUCT':
+                    PRODUCT += 1
+
+            all_data[i]['count_ner']['person'] = PERSON
+            all_data[i]['count_ner']['org'] = ORG
+            all_data[i]['count_ner']['gpe'] = GPE
+            all_data[i]['count_ner']['event'] = EVENT
+            all_data[i]['count_ner']['merk'] = MERK
+            all_data[i]['count_ner']['product'] = PRODUCT
+
+            data = []
+            for ent in doc.ents:
+                data_json = {
+                    'text': ent.text,
+                    'label': ent.label_
+                }
+                data.append(data_json)
+            unique = {each['text']: each for each in data}.values()
+            data = []
+            for u in unique:
+                data.append(u)
+
+            for d in data:
+                text = text.replace(d['text'],
+                                    '''<mark class="{label}-{_id} font-mark transparent style-{label}"> {text} </mark>'''.format(
+                                        _id=all_data[i]['_id'], label=d['label'], text=d['text']))
+            text = ''.join(('''<div class="entities"> ''', text, ' </div>'))
+            text = text.split('\n')
+
+            all_data[i]['ner_content'] = text
+
+        return all_data
 
     def ner_text(self, text=None):
         doc = nlp(text)
@@ -134,9 +196,7 @@ class Scraper_Tempo():
         return data_json
 
     def get_content2(self, all_data=None):
-        print('Get Content...')
-
-        for i in tqdm(range(len(all_data))):
+        for i in tqdm(range(len(all_data)), desc='Get Content'):
             try:
                 temp = self.get_content(all_data[i]['url'])
                 all_data[i]['content'] = temp['content']
@@ -150,8 +210,7 @@ class Scraper_Tempo():
         return all_data
 
     def clean_content(self, all_data=None):
-        print('Clean Content')
-        for i in tqdm(range(len(all_data))):
+        for i in tqdm(range(len(all_data)), desc='Clean Content'):
             text_stopword = []
             all_data[i]['clean_content'] = preprocess_text(all_data[i]['content'], lowercase=True, fix_unicode=True,
                                                            no_punct=True)

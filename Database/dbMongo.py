@@ -149,6 +149,37 @@ class Database():
 
         return query
 
+    def get_dataByRequest(self, database=None, collection=None, source=None, day=None, month=None, year=None):
+        myclient = pymongo.MongoClient("mongodb://{}:{}".format(self.host, self.port))
+        mydb = myclient["{}".format(database)]
+        mycol = mydb["{}".format(collection)]
+
+        if month <= 9:
+            if day <= 9:
+                query = mycol.find({
+                    'publishedAt': '0{}-0{}-{}'.format(day, month, year),
+                    'source' : source
+                })
+            else:
+                query = mycol.find({
+                    'publishedAt': '{}-0{}-{}'.format(day, month, year),
+                    'source': source
+                })
+        else:
+            if day <= 9:
+                query = mycol.find({
+                    'publishedAt': '0{}-{}-{}'.format(day, month, year),
+                    'source': source
+                })
+            else:
+                query = mycol.find({
+                    'publishedAt': '{}-{}-{}'.format(day, month, year),
+                    'source': source
+                })
+
+        return query
+
+
     def get_dataMonthly(self, database=None, collection=None, source=None, month=None, year=None):
         myclient = pymongo.MongoClient("mongodb://{}:{}".format(self.host, self.port))
         mydb = myclient["{}".format(database)]
