@@ -151,8 +151,7 @@ class Scraper_Liputan():
         return all_data2
 
     def clean_content(self, all_data=None):
-        print('Clean Content')
-        for i in tqdm(range(len(all_data))):
+        for i in tqdm(range(len(all_data)), desc='Clean Content'):
             text_stopword = []
             all_data[i]['clean_content'] = preprocess_text(all_data[i]['content'], lowercase=True, fix_unicode=True,no_punct=True)
             clean_content = all_data[i]['clean_content'].split()
@@ -163,367 +162,145 @@ class Scraper_Liputan():
 
         return all_data
 
-    def get_dataMonth(self, category=None, name_category=None, tahun=None, bulan=None):
-        print('Scraping Data...')
+    def get_dataMonthly(self, category=None, name_category=None, tahun=None, bulan=None):
         all_data = []
-
-        for i in tqdm(range(31)):
-            if bulan <= 9:
-                if i+1 <= 9:
-                    for y in (range(2)):
-                        try:
-                            url = '''https://www.liputan6.com/{}/indeks/{}/0{}/0{}?page={}'''.format(category, tahun, bulan,
-                                                                                                     i + 1, y + 1)
-                            print(url)
-                            response = requests.get(url)
-                            html = response.text
-                            soup = BeautifulSoup(html, "html5lib")
-
-                            contents = soup.select('.articles--rows--item__details')
-
-                            for y in range(len(contents)):
-                                title = contents[y].select_one('.articles--rows--item__title').text
-
-                                if title[:6] != 'VIDEO:' and title[:5] != 'FOTO:' and title[:6] != 'FOTO :' and title[:5] != 'Top 3' and title[:4] != 'Top3':
-                                    url_lokal = contents[y].select_one('.articles--rows--item__title > a')['href']
-                                    category = url.split('/')[3]
-                                    subCategory = contents[y].select_one('.articles--rows--item__category').text
-                                    title = contents[y].select_one('.articles--rows--item__title').text
-                                    description = contents[y].select_one('.articles--rows--item__summary').text
-                                    date = url.split('/')[7].split('?')[0] + '-' + url.split('/')[6] + '-' + url.split('/')[5]
-
-                                    data_json = {
-                                        "category": name_category,
-                                        "title": title,
-                                        "description": description,
-                                        "url": url_lokal,
-                                        "content": '',
-                                        "content_html": '',
-                                        "img": '',
-                                        "sub_category": subCategory,
-                                        "publishedAt": date,
-                                        "source" : 'liputan6.com',
-                                        "clean_content" : '',
-                                        "ner_content" : '',
-                                        'count_ner': {
-                                            'person': 0,
-                                            'org': 0,
-                                            'gpe': 0,
-                                            'event': 0,
-                                            'merk': 0,
-                                            'product': 0
-                                        }
-                                    }
-                                    all_data.append(data_json)
-
-                        except:
-                            pass
+        for i in tqdm(range(31), desc='Get Data monthly'):
+            for page in range(2):
+                if bulan <= 9:
+                    if i + 1 <= 9:
+                        url = '''https://www.liputan6.com/{}/indeks/{}/0{}/0{}?page={}'''.format(category, tahun, bulan,
+                                                                                                 i + 1, page + 1)
+                    else:
+                        url = '''https://www.liputan6.com/{}/indeks/{}/0{}/{}?page={}'''.format(category, tahun, bulan,
+                                                                                                i + 1, page + 1)
                 else:
-                    for y in (range(2)):
-                        try:
-                            url = '''https://www.liputan6.com/{}/indeks/{}/0{}/{}?page={}'''.format(category, tahun, bulan,
-                                                                                                     i + 1, y + 1)
-                            print(url)
-                            response = requests.get(url)
-                            html = response.text
-                            soup = BeautifulSoup(html, "html5lib")
+                    if i + 1 <= 9:
+                        url = '''https://www.liputan6.com/{}/indeks/{}/{}/0{}?page={}'''.format(category, tahun, bulan,
+                                                                                                i + 1, page + 1)
+                    else:
+                        url = '''https://www.liputan6.com/{}/indeks/{}/{}/{}?page={}'''.format(category, tahun, bulan,
+                                                                                               i + 1, page + 1)
 
-                            contents = soup.select('.articles--rows--item__details')
+                print(url)
+                response = requests.get(url)
+                html = response.text
+                soup = BeautifulSoup(html, "html5lib")
 
-                            for y in range(len(contents)):
-                                title = contents[y].select_one('.articles--rows--item__title').text
+                contents = soup.select('.articles--rows--item__details')
 
-                                if title[:6] != 'VIDEO:' and title[:5] != 'FOTO:' and title[:6] != 'FOTO :' and title[:5] != 'Top 3' and title[:4] != 'Top3':
-                                    url_lokal = contents[y].select_one('.articles--rows--item__title > a')['href']
-                                    category = url.split('/')[3]
-                                    subCategory = contents[y].select_one('.articles--rows--item__category').text
-                                    title = contents[y].select_one('.articles--rows--item__title').text
-                                    description = contents[y].select_one('.articles--rows--item__summary').text
-                                    date = url.split('/')[7].split('?')[0] + '-' + url.split('/')[6] + '-' + url.split('/')[5]
+                for y in range(len(contents)):
+                    title = contents[y].select_one('.articles--rows--item__title').text
 
-                                    data_json = {
-                                        "category": name_category,
-                                        "title": title,
-                                        "description": description,
-                                        "url": url_lokal,
-                                        "content": '',
-                                        "img": '',
-                                        "sub_category": subCategory,
-                                        "publishedAt": date,
-                                        "source" : 'liputan6.com',
-                                        "clean_content" : '',
-                                        "ner_content": '',
-                                        'count_ner': {
-                                            'person': 0,
-                                            'org': 0,
-                                            'gpe': 0,
-                                            'event': 0,
-                                            'merk': 0,
-                                            'product': 0
-                                        }
-                                    }
-                                    all_data.append(data_json)
+                    if title[:6] != 'VIDEO:' and title[:5] != 'FOTO:' and title[:6] != 'FOTO :' and title[
+                                                                                                    :5] != 'Top 3' and title[
+                                                                                                                       :4] != 'Top3':
+                        url_lokal = contents[y].select_one('.articles--rows--item__title > a')['href']
+                        category = url.split('/')[3]
+                        subCategory = contents[y].select_one('.articles--rows--item__category').text
+                        title = contents[y].select_one('.articles--rows--item__title').text
+                        description = contents[y].select_one('.articles--rows--item__summary').text
+                        date = url.split('/')[7].split('?')[0] + '-' + url.split('/')[6] + '-' + url.split('/')[5]
 
-                        except:
-                            pass
-
-            else:
-                if (i+1) <= 9:
-                    for y in (range(2)):
-                        try:
-                            url = '''https://www.liputan6.com/{}/indeks/{}/{}/0{}?page={}'''.format(category, tahun,
-                                                                                                   bulan,
-                                                                                                   i + 1, y + 1)
-                            print(url)
-                            response = requests.get(url)
-                            html = response.text
-                            soup = BeautifulSoup(html, "html5lib")
-
-                            contents = soup.select('.articles--rows--item__details')
-
-                            for y in range(len(contents)):
-                                title = contents[y].select_one('.articles--rows--item__title').text
-
-                                if title[:6] != 'VIDEO:' and title[:5] != 'FOTO:' and title[:6] != 'FOTO :' and title[:5] != 'Top 3' and title[:4] != 'Top3':
-                                    url_lokal = contents[y].select_one('.articles--rows--item__title > a')['href']
-                                    category = url.split('/')[3]
-                                    subCategory = contents[y].select_one('.articles--rows--item__category').text
-                                    title = contents[y].select_one('.articles--rows--item__title').text
-                                    description = contents[y].select_one('.articles--rows--item__summary').text
-                                    date = url.split('/')[7].split('?')[0] + '-' + url.split('/')[6] + '-' + url.split('/')[5]
-
-                                    data_json = {
-                                        "category": name_category,
-                                        "title": title,
-                                        "description": description,
-                                        "url": url_lokal,
-                                        "content": '',
-                                        "img": '',
-                                        "sub_category": subCategory,
-                                        "publishedAt": date,
-                                        "source": 'liputan6.com',
-                                        "clean_content": '',
-                                        "ner_content": '',
-                                        'count_ner': {
-                                            'person': 0,
-                                            'org': 0,
-                                            'gpe': 0,
-                                            'event': 0,
-                                            'merk': 0,
-                                            'product': 0
-                                        }
-                                    }
-                                    all_data.append(data_json)
-
-                        except:
-                            pass
-                else:
-                    for y in (range(2)):
-
-                        try:
-                            url = '''https://www.liputan6.com/{}/indeks/{}/{}/{}?page={}'''.format(category, tahun, bulan,
-                                                                                                   i + 1, y + 1)
-                            print(url)
-                            response = requests.get(url)
-                            html = response.text
-                            soup = BeautifulSoup(html, "html5lib")
-
-                            contents = soup.select('.articles--rows--item__details')
-
-                            for y in range(len(contents)):
-                                title = contents[y].select_one('.articles--rows--item__title').text
-
-                                if title[:6] != 'VIDEO:' and title[:5] != 'FOTO:' and title[:6] != 'FOTO :' and title[:5] != 'Top 3' and title[:4] != 'Top3':
-                                    url_lokal = contents[y].select_one('.articles--rows--item__title > a')['href']
-                                    category = url.split('/')[3]
-                                    subCategory = contents[y].select_one('.articles--rows--item__category').text
-                                    title = contents[y].select_one('.articles--rows--item__title').text
-                                    description = contents[y].select_one('.articles--rows--item__summary').text
-                                    date = url.split('/')[7].split('?')[0] + '-' + url.split('/')[6] + '-' + url.split('/')[5]
-
-                                    data_json = {
-                                        "category": name_category,
-                                        "title": title,
-                                        "description": description,
-                                        "url": url_lokal,
-                                        "content": '',
-                                        "img": '',
-                                        "sub_category": subCategory,
-                                        "publishedAt": date,
-                                        "source" : 'liputan6.com',
-                                        "clean_content" : '',
-                                        "ner_content": '',
-                                        'count_ner': {
-                                            'person': 0,
-                                            'org': 0,
-                                            'gpe': 0,
-                                            'event': 0,
-                                            'merk': 0,
-                                            'product': 0
-                                        }
-                                    }
-                                    all_data.append(data_json)
-
-                        except:
-                            pass
+                        data_json = {
+                            "category": name_category,
+                            "title": title,
+                            "description": description,
+                            "url": url_lokal,
+                            "content": '',
+                            "content_html": '',
+                            "img": '',
+                            "sub_category": subCategory,
+                            "publishedAt": date,
+                            "source": 'liputan6.com',
+                            "clean_content": '',
+                            "ner_content": '',
+                            'count_ner': {
+                                'person': 0,
+                                'org': 0,
+                                'gpe': 0,
+                                'event': 0,
+                                'merk': 0,
+                                'product': 0
+                            }
+                        }
+                        all_data.append(data_json)
 
         return all_data
 
-
     def get_dataDaily(self, category=None, name_category=None, tahun=None, bulan=None, tanggal=None):
-        print('Scraping Data....')
         all_data = []
 
-        if bulan <= 9 and tanggal <= 9:
-            for y in (range(2)):
-                try:
+        for i in tqdm(range(2), desc='Get Data Daily'):
+            if bulan <= 9:
+                if tanggal <= 9:
                     url = '''https://www.liputan6.com/{}/indeks/{}/0{}/0{}?page={}'''.format(category, tahun, bulan,
-                                                                                             tanggal, y + 1)
-                    print(url)
-                    response = requests.get(url)
-                    html = response.text
-                    soup = BeautifulSoup(html, "html5lib")
-
-                    contents = soup.select('.articles--rows--item__details')
-
-                    for y in range(len(contents)):
-                        title = contents[y].select_one('.articles--rows--item__title').text
-
-                        if title[:6] != 'VIDEO:' and title[:5] != 'FOTO:' and title[:6] != 'FOTO :' and title[:5] != 'Top 3' and title[:4] != 'Top3':
-                            url_lokal = contents[y].select_one('.articles--rows--item__title > a')['href']
-                            category = url.split('/')[3]
-                            subCategory = contents[y].select_one('.articles--rows--item__category').text
-                            title = contents[y].select_one('.articles--rows--item__title').text
-                            description = contents[y].select_one('.articles--rows--item__summary').text
-                            date = url.split('/')[7].split('?')[0] + '-' + url.split('/')[6] + '-' + url.split('/')[5]
-
-                            data_json = {
-                                "category": name_category,
-                                "title": title,
-                                "description": description,
-                                "url": url_lokal,
-                                "content": '',
-                                "img": '',
-                                "sub_category": subCategory,
-                                "publishedAt": date,
-                                "source" : 'liputan6.com',
-                                "clean_content" : '',
-                                "ner_content": '',
-                                'count_ner': {
-                                    'person': 0,
-                                    'org': 0,
-                                    'gpe': 0,
-                                    'event': 0,
-                                    'merk': 0,
-                                    'product': 0
-                                }
-                            }
-                            all_data.append(data_json)
-
-                except:
-                    pass
-        else:
-            if bulan<=9:
-                for y in (range(2)):
-                    try:
-                        url = '''https://www.liputan6.com/{}/indeks/{}/0{}/{}?page={}'''.format(category, tahun, bulan,
-                                                                                               tanggal, y + 1)
-                        print(url)
-                        response = requests.get(url)
-                        html = response.text
-                        soup = BeautifulSoup(html, "html5lib")
-
-                        contents = soup.select('.articles--rows--item__details')
-
-                        for y in range(len(contents)):
-                            title = contents[y].select_one('.articles--rows--item__title').text
-
-                            if title[:6] != 'VIDEO:' and title[:5] != 'FOTO:' and title[:6] != 'FOTO :' and title[:5] != 'Top 3' and title[:4] != 'Top3':
-                                url_lokal = contents[y].select_one('.articles--rows--item__title > a')['href']
-                                category = url.split('/')[3]
-                                subCategory = contents[y].select_one('.articles--rows--item__category').text
-                                title = contents[y].select_one('.articles--rows--item__title').text
-                                description = contents[y].select_one('.articles--rows--item__summary').text
-                                date = url.split('/')[7].split('?')[0] + '-' + url.split('/')[6] + '-' + url.split('/')[5]
-
-                                data_json = {
-                                    "category": name_category,
-                                    "title": title,
-                                    "description": description,
-                                    "url": url_lokal,
-                                    "content": '',
-                                    "img": '',
-                                    "sub_category": subCategory,
-                                    "publishedAt": date,
-                                    "source": 'liputan6.com',
-                                    "clean_content": '',
-                                    "ner_content": '',
-                                    'count_ner': {
-                                        'person': 0,
-                                        'org': 0,
-                                        'gpe': 0,
-                                        'event': 0,
-                                        'merk': 0,
-                                        'product': 0
-                                    }
-                                }
-                                all_data.append(data_json)
-
-                    except:
-                        pass
+                                                                                             tanggal, i + 1)
+                else:
+                    url = '''https://www.liputan6.com/{}/indeks/{}/0{}/{}?page={}'''.format(category, tahun, bulan,
+                                                                                            tanggal, i + 1)
             else:
-                for y in (range(2)):
-                    try:
-                        url = '''https://www.liputan6.com/{}/indeks/{}/{}/{}?page={}'''.format(category, tahun, bulan,
-                                                                                               tanggal, y + 1)
-                        print(url)
-                        response = requests.get(url)
-                        html = response.text
-                        soup = BeautifulSoup(html, "html5lib")
+                if tanggal <= 9:
+                    url = '''https://www.liputan6.com/{}/indeks/{}/{}/0{}?page={}'''.format(category, tahun, bulan,
+                                                                                            tanggal, i + 1)
+                else:
+                    url = '''https://www.liputan6.com/{}/indeks/{}/{}/{}?page={}'''.format(category, tahun, bulan,
+                                                                                           tanggal, i + 1)
 
-                        contents = soup.select('.articles--rows--item__details')
+            print(url)
+            response = requests.get(url)
+            html = response.text
+            soup = BeautifulSoup(html, "html5lib")
 
-                        for y in range(len(contents)):
-                            title = contents[y].select_one('.articles--rows--item__title').text
+            contents = soup.select('.articles--rows--item__details')
 
-                            if title[:6] != 'VIDEO:' and title[:5] != 'FOTO:' and title[:6] != 'FOTO :' and title[:5] != 'Top 3' and title[:4] != 'Top3':
-                                url_lokal = contents[y].select_one('.articles--rows--item__title > a')['href']
-                                category = url.split('/')[3]
-                                subCategory = contents[y].select_one('.articles--rows--item__category').text
-                                title = contents[y].select_one('.articles--rows--item__title').text
-                                description = contents[y].select_one('.articles--rows--item__summary').text
-                                date = url.split('/')[7].split('?')[0] + '-' + url.split('/')[6] + '-' + url.split('/')[5]
+            for y in range(len(contents)):
+                title = contents[y].select_one('.articles--rows--item__title').text
 
-                                data_json = {
-                                    "category": name_category,
-                                    "title": title,
-                                    "description": description,
-                                    "url": url_lokal,
-                                    "content": '',
-                                    "img": '',
-                                    "sub_category": subCategory,
-                                    "publishedAt": date,
-                                    "source" : 'liputan6.com',
-                                    "clean_content" : '',
-                                    "ner_content": '',
-                                    'count_ner': {
-                                        'person': 0,
-                                        'org': 0,
-                                        'gpe': 0,
-                                        'event': 0,
-                                        'merk': 0,
-                                        'product': 0
-                                    }
-                                }
-                                all_data.append(data_json)
+                if title[:6] != 'VIDEO:' and title[:5] != 'FOTO:' and title[:6] != 'FOTO :' and title[
+                                                                                                :5] != 'Top 3' and title[
+                                                                                                                   :4] != 'Top3':
+                    url_lokal = contents[y].select_one('.articles--rows--item__title > a')['href']
+                    category = url.split('/')[3]
+                    subCategory = contents[y].select_one('.articles--rows--item__category').text
+                    title = contents[y].select_one('.articles--rows--item__title').text
+                    description = contents[y].select_one('.articles--rows--item__summary').text
+                    date = url.split('/')[7].split('?')[0] + '-' + url.split('/')[6] + '-' + url.split('/')[5]
 
-                    except:
-                        pass
+                    data_json = {
+                        "category": name_category,
+                        "title": title,
+                        "description": description,
+                        "url": url_lokal,
+                        "content": '',
+                        "img": '',
+                        "sub_category": subCategory,
+                        "publishedAt": date,
+                        "source": 'liputan6.com',
+                        "clean_content": '',
+                        "ner_content": '',
+                        'count_ner': {
+                            'person': 0,
+                            'org': 0,
+                            'gpe': 0,
+                            'event': 0,
+                            'merk': 0,
+                            'product': 0
+                        }
+                    }
+                    all_data.append(data_json)
 
         return all_data
 
     def get_dataHarian(self, category=None, name_category=None, year=None, month=None, day=None):
         all_data = self.get_dataDaily(category, name_category, year, month, day)
+        all_data = self.get_content2((all_data))
+        all_data = self.clean_data(all_data)
+        all_data = self.clean_content(all_data)
+
+        return all_data
+
+    def get_dataBulanan(self, category=None, name_category=None, year=None, month=None):
+        all_data = self.get_dataMonthly(category, name_category, year, month)
         all_data = self.get_content2((all_data))
         all_data = self.clean_data(all_data)
         all_data = self.clean_content(all_data)
