@@ -281,3 +281,13 @@ class Scraper_Tempo():
         all_data = self.clean_content(all_data)
 
         return all_data
+
+    def get_dataBulanan(self, category=None, name_category=None, year=None, month=None):
+        all_data = self.get_tempoMonthly(category, name_category, year, month)
+        all_data = self.get_content2((all_data))
+        all_data = self.clean_data(all_data)
+        all_data = self.clean_content(all_data)
+
+        return all_data
+
+

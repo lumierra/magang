@@ -79,6 +79,21 @@ class Database():
                     'source': source
                 })
 
+    def delete_dataMonthly(self, database=None, collection=None, source=None, month=None, year=None):
+        myclient = pymongo.MongoClient("mongodb://{}:{}".format(self.host, self.port))
+        mydb = myclient["{}".format(database)]
+        mycol = mydb["{}".format(collection)]
+
+        query = mycol.find({
+            'source': source,
+            'publishedAt': {
+                '$gte': '01-{}-{}'.format(month, year),
+                '$lte': '31-{}-{}'.format(month, year)
+            }
+        })
+
+        return query
+
     def get_data(self, database=None, collection=None, source=None):
         myclient = pymongo.MongoClient("mongodb://{}:{}".format(self.host, self.port))
         mydb = myclient["{}".format(database)]
@@ -113,3 +128,17 @@ class Database():
 
         return query
 
+    def get_dataMonthly(self, database=None, collection=None, source=None, year=None, month=None):
+        myclient = pymongo.MongoClient("mongodb://{}:{}".format(self.host, self.port))
+        mydb = myclient["{}".format(database)]
+        mycol = mydb["{}".format(collection)]
+
+        query = mycol.find({
+            'source' : source,
+            'publishedAt': {
+                '$gte': '01-{}-{}'.format(month, year),
+                '$lte': '31-{}-{}'.format(month, year)
+            }
+        })
+
+        return query
