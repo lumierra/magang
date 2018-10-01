@@ -22,7 +22,7 @@ for x,y in zip(list_category_kompas, list_name_category_kompas):
 
     db.insert_data('scraper', 'test', attr)
 
-data = SK.get_ner('harian')
+data = SK.get_ner()
 attr = []
 for d in data:
     attr.append(d)

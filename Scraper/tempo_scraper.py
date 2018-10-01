@@ -292,3 +292,81 @@ class Scraper_Tempo():
         all_data = self.clean_content(all_data)
 
         return all_data
+
+    def main(self):
+        print(' ---- MENU SCRAPER TEMPO ---- ')
+        print('1. Bulanan ')
+        print('2. Harian ')
+        pilihan = eval(input('Pilihan : '))
+
+        if pilihan == 1:
+            list_category = []
+            list_name_of_category = []
+            count = 0
+            long_category = eval(input(' Banyaknya Kategori : '))
+            while (count < long_category):
+                category = input('Category : ')
+                name_category = input('Name of Category : ')
+                list_category.append(category)
+                list_name_of_category.append(name_category)
+                count += 1
+            year = eval(input('Tahun : '))
+            month = eval(input('Bulan : '))
+
+            # delete data from mongoDB
+            db.delete_dataDaily('scraper', 'test', 'tempo.co')
+
+            # Get Data
+            for x, y in zip(list_category, list_name_of_category):
+                data = self.get_dataBulanan(x, y, year, month)
+
+                attr = []
+                for i in range(len(data)):
+                    attr.append(data[i])
+
+                db.insert_data('scraper', 'test', attr)
+
+            data = self.get_ner()
+            attr = []
+            for d in data:
+                attr.append(d)
+            db.delete_dataDaily('scraper', 'test', 'tempo.co')
+            db.insert_data('scraper', 'test', attr)
+
+        elif pilihan == 2:
+            list_category = []
+            list_name_of_category = []
+            count = 0
+            long_category = eval(input(' Banyaknya Kategori : '))
+            while (count < long_category):
+                category = input('Category : ')
+                name_category = input('Name of Category : ')
+                list_category.append(category)
+                list_name_of_category.append(name_category)
+                count += 1
+            year = eval(input('Tahun : '))
+            month = eval(input('Bulan : '))
+            day = eval(input('Tanggal : '))
+
+            # delete data from mongoDB
+            db.delete_dataDaily('scraper', 'test', 'tempo.co')
+
+            # Get Data
+            for x, y in zip(list_category, list_name_of_category):
+                data = self.get_dataBulanan(x, y, year, month)
+
+                attr = []
+                for i in range(len(data)):
+                    attr.append(data[i])
+
+                db.insert_data('scraper', 'test', attr)
+
+            data = self.get_ner()
+            attr = []
+            for d in data:
+                attr.append(d)
+            db.delete_dataDaily('scraper', 'test', 'tempo.co')
+            db.insert_data('scraper', 'test', attr)
+
+        else:
+            print('Pilihan Tidak Ada !!')

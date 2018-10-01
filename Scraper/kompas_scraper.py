@@ -23,7 +23,7 @@ class Scraper_Kompas():
     def __init__(self):
         self
 
-    def get_ner(self, all_data=None):
+    def get_ner(self):
 
         query = db.get_data('scraper', 'test', 'kompas.com')
 
@@ -167,9 +167,9 @@ class Scraper_Kompas():
 
         return all_data2
 
-    def get_dataMonth(self, global_category=None, name_category=None, tahun=None, bulan=None):
+    def get_dataMonthly(self, global_category=None, name_category=None, tahun=None, bulan=None):
         all_data = []
-        for tanggal in tqdm(range(31)):
+        for tanggal in tqdm(range(31), desc='Get Data Monthly'):
             try:
                 url = '''https://{}.kompas.com/search/{}-{}-{}'''.format(global_category, tahun, bulan, tanggal + 1)
                 data = requests.get(url)
@@ -237,7 +237,7 @@ class Scraper_Kompas():
                             contents = soup.select('.article__list.clearfix')
                             print(url_lokal)
 
-                            for content in (contents):
+                            for content in contents:
                                 try:
                                     temp_category = content.select_one('.article__subtitle').text.strip()
                                     temp_url = content.select_one('.article__link')['href']
@@ -296,7 +296,7 @@ class Scraper_Kompas():
             contents = soup.select('.article__list.clearfix')
             print(url_lokal)
 
-            for content in (contents):
+            for content in contents:
                 try:
                     temp_category = content.select_one('.article__subtitle').text.strip()
                     temp_url = content.select_one('.article__link')['href']
@@ -345,7 +345,7 @@ class Scraper_Kompas():
                     contents = soup.select('.article__list.clearfix')
                     print(url_lokal)
 
-                    for content in (contents):
+                    for content in contents:
                         try:
                             temp_category = content.select_one('.article__subtitle').text.strip()
                             temp_url = content.select_one('.article__link')['href']
@@ -390,37 +390,91 @@ class Scraper_Kompas():
         all_data = self.get_content2(all_data)
         all_data = self.clean_data(all_data)
         all_data = self.clean_content(all_data)
-        all_data = self.get_ner(all_data)
 
         return all_data
 
+    def get_dataBulanan(self, category=None, name_category=None, year=None, month=None):
+        all_data = self.get_dataMonthly(category, name_category, year, month)
+        all_data = self.get_content2(all_data)
+        all_data = self.clean_data(all_data)
+        all_data = self.clean_content(all_data)
+
+        return all_data
 
     def main(self):
-        print(' ---- MENU SCRAPER ---- ')
+        print(' ---- MENU SCRAPER KOMPAS ---- ')
         print('1. Bulanan ')
         print('2. Harian ')
         pilihan = eval(input('Pilihan : '))
 
         if pilihan == 1:
-            category = input('Category : ')
+            list_category = []
+            list_name_of_category = []
+            count = 0
+            long_category = eval(input(' Banyaknya Kategori : '))
+            while (count < long_category):
+                category = input('Category : ')
+                name_category = input('Name of Category : ')
+                list_category.append(category)
+                list_name_of_category.append(name_category)
+                count += 1
             year = eval(input('Tahun : '))
             month = eval(input('Bulan : '))
 
-            all_data = self.get_dataMonth(category, year, month)
-            temp_data = self.get_content_fix((all_data))
+            # delete data from mongoDB
+            db.delete_dataDaily('scraper', 'test', 'kompas.com')
 
-            all_data2 = self.clean_data(temp_data)
+            # Get Data
+            for x, y in zip(list_category, list_name_of_category):
+                data = self.get_dataBulanan(x, y, year, month)
+
+                attr = []
+                for i in range(len(data)):
+                    attr.append(data[i])
+
+                db.insert_data('scraper', 'test', attr)
+
+            data = self.get_ner()
+            attr = []
+            for d in data:
+                attr.append(d)
+            db.delete_dataDaily('scraper', 'test', 'kompas.com')
+            db.insert_data('scraper', 'test', attr)
 
         elif pilihan == 2:
-            category = input('Category : ')
+            list_category = []
+            list_name_of_category = []
+            count = 0
+            long_category = eval(input(' Banyaknya Kategori : '))
+            while (count < long_category):
+                category = input('Category : ')
+                name_category = input('Name of Category : ')
+                list_category.append(category)
+                list_name_of_category.append(name_category)
+                count += 1
             year = eval(input('Tahun : '))
             month = eval(input('Bulan : '))
             day = eval(input('Tanggal : '))
 
-            all_data = self.get_dataDaily(category, year, month, day)
-            temp_data = self.get_content_fix((all_data))
+            # delete data from mongoDB
+            db.delete_dataDaily('scraper', 'test', 'kompas.com')
 
-            all_data2 = self.clean_data(temp_data)
+            # Get Data
+            for x, y in zip(list_category, list_name_of_category):
+                data = self.get_dataBulanan(x, y, year, month)
+
+                attr = []
+                for i in range(len(data)):
+                    attr.append(data[i])
+
+                db.insert_data('scraper', 'test', attr)
+
+            data = self.get_ner()
+            attr = []
+            for d in data:
+                attr.append(d)
+            db.delete_dataDaily('scraper', 'test', 'kompas.com')
+            db.insert_data('scraper', 'test', attr)
 
         else:
             print('Pilihan Tidak Ada !!')
