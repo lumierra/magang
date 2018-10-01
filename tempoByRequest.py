@@ -15,25 +15,27 @@ collection = 'tekno'
 source = 'tempo.co'
 category = 'tekno'
 name_category = 'tekno'
-day = 3
-month = 1
+day = 31
+month = 2
 year = 2017
 
-#delete data from mongoDB
-db.delete_by_request(database, collection, source, day, month, year)
+for i in range(28):
 
-# Get Data
-data = ST.get_dataHarian(category, name_category, year, month, day)
+    #delete data from mongoDB
+    db.delete_by_request(database, collection, source, i+1, month, year)
 
-attr = []
-for d in data:
-    attr.append(d)
+    # Get Data
+    data = ST.get_dataHarian(category, name_category, year, month, i+1)
 
-db.insert_data(database, collection, attr)
+    attr = []
+    for d in data:
+        attr.append(d)
 
-data = ST.get_ner2(status, database, collection, source, day, month, year)
-attr = []
-for d in data:
-    attr.append(d)
-db.delete_by_request(database, collection, source, day, month, year)
-db.insert_data(database, collection, attr)
+    db.insert_data(database, collection, attr)
+
+    data = ST.get_ner2(status, database, collection, source, i+1, month, year)
+    attr = []
+    for d in data:
+        attr.append(d)
+    db.delete_by_request(database, collection, source, i+1, month, year)
+    db.insert_data(database, collection, attr)
