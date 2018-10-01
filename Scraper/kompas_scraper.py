@@ -133,17 +133,6 @@ class Scraper_Kompas():
 
         return all_data
 
-    def get_content2(self, all_data=None):
-        for i in tqdm(range(len(all_data)), desc='Get Content'):
-            try:
-                temp = self.get_content(all_data[i]['url'])
-                all_data[i]['content'] = temp['content']
-                all_data[i]['img'] = temp['img']
-            except:
-                pass
-
-        return all_data
-
     def clean_content(self, all_data=None):
         for i in tqdm(range(len(all_data)), desc='Clean Content'):
             text_stopword = []
@@ -384,7 +373,7 @@ class Scraper_Kompas():
 
     def get_dataHarian(self, category=None, name_category=None, year=None, month=None, day=None):
         all_data = self.get_dataDaily(category, name_category, year, month, day)
-        all_data = self.get_content2((all_data))
+        all_data = self.get_content2(all_data)
         all_data = self.clean_data(all_data)
         all_data = self.clean_content(all_data)
         all_data = self.get_ner(all_data)

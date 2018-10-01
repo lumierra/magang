@@ -1,8 +1,10 @@
 import datetime
 from Database.dbMongo import Database
 from Scraper.tempo_scraper import Scraper_Tempo
+from Scraper.kompas_scraper import Scraper_Kompas
 
 ST = Scraper_Tempo()
+SK = Scraper_Kompas()
 db = Database()
 now = datetime.datetime.now().date()
 
@@ -29,5 +31,6 @@ list_name_category_tempo = ['otomotif']
 # db.delete_dataMonthly('scraper', 'test2', 'tempo.co', '10', '2018')
 # db.insert_data('scraper', 'test2', attr)
 
-data = ST.get_dataBulanan('tekno', 'tekno', 2018, 10)
+# data = ST.get_dataBulanan('tekno', 'tekno', 2018, 10)
+data = SK.get_dataHarian('tekno', 'tekno', 2018, 10, 1)
 print(data[0])
