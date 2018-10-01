@@ -353,7 +353,7 @@ class Scraper_Tempo():
 
             # Get Data
             for x, y in zip(list_category, list_name_of_category):
-                data = self.get_dataBulanan(x, y, year, month)
+                data = self.get_dataHarian(x, y, year, month, day)
 
                 attr = []
                 for i in range(len(data)):
