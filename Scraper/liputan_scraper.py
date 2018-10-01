@@ -344,7 +344,6 @@ class Scraper_Liputan():
 
         return all_data
 
-
 # if __name__== "__main__":
 #
 #     sl = Scraper_Liputan()

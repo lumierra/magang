@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="28108628-4e2f-4310-93ca-ce9afbc16ebe" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/Scraper/liputan_scraper.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scraper/liputan_scraper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Scraper/tempo_scraper.py" beforeDir="false" afterPath="$PROJECT_DIR$/Scraper/tempo_scraper.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -56,11 +56,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Scraper/liputan_scraper.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret line="289" column="22" selection-start-line="289" selection-start-column="22" selection-end-line="289" selection-end-column="22" />
+            <state relative-caret-position="135">
+              <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -68,11 +68,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="31" column="52" lean-forward="true" selection-start-line="31" selection-start-column="52" selection-end-line="31" selection-end-column="52" />
+            <state relative-caret-position="210">
+              <caret line="32" column="14" lean-forward="true" selection-start-line="32" selection-start-column="14" selection-end-line="32" selection-end-column="14" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -83,11 +83,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Scraper/tempo_scraper.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="645">
-              <caret line="52" column="43" lean-forward="true" selection-end-line="296" />
+            <state relative-caret-position="196">
+              <caret line="293" column="23" selection-start-line="293" selection-start-column="23" selection-end-line="293" selection-end-column="23" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
-                <marker date="1538361896215" expanded="true" signature="619:2873" ph="..." />
+                <marker date="1538373715309" expanded="true" signature="619:2873" ph="..." />
               </folding>
             </state>
           </provider>
@@ -120,10 +120,10 @@
         <option value="$PROJECT_DIR$/Scraper/kompas_scraper.py" />
         <option value="$PROJECT_DIR$/save_data.py" />
         <option value="$PROJECT_DIR$/Database/dbMongo.py" />
-        <option value="$PROJECT_DIR$/Scraper/tempo_scraper.py" />
         <option value="$PROJECT_DIR$/tempoHarian.py" />
-        <option value="$PROJECT_DIR$/Scraper/liputan_scraper.py" />
         <option value="$PROJECT_DIR$/test.py" />
+        <option value="$PROJECT_DIR$/Scraper/tempo_scraper.py" />
+        <option value="$PROJECT_DIR$/Scraper/liputan_scraper.py" />
       </list>
     </option>
   </component>
@@ -310,31 +310,31 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Scraper/tempo_scraper.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="645">
-          <caret line="52" column="43" lean-forward="true" selection-end-line="296" />
+        <state relative-caret-position="196">
+          <caret line="293" column="23" selection-start-line="293" selection-start-column="23" selection-end-line="293" selection-end-column="23" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
-            <marker date="1538361896215" expanded="true" signature="619:2873" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Scraper/liputan_scraper.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="289" column="22" selection-start-line="289" selection-start-column="22" selection-end-line="289" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
+            <marker date="1538373715309" expanded="true" signature="619:2873" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="31" column="52" lean-forward="true" selection-start-line="31" selection-start-column="52" selection-end-line="31" selection-end-column="52" />
+        <state relative-caret-position="210">
+          <caret line="32" column="14" lean-forward="true" selection-start-line="32" selection-start-column="14" selection-end-line="32" selection-end-column="14" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Scraper/liputan_scraper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
           </folding>
         </state>
       </provider>

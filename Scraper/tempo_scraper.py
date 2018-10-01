@@ -292,5 +292,3 @@ class Scraper_Tempo():
         all_data = self.clean_content(all_data)
 
         return all_data
-
-
