@@ -72,7 +72,7 @@ class Database():
         mycol = mydb["{}".format(collection)]
 
         year = now.year
-        month = now.months
+        month = now.month
         day = now.day
 
         if month <= 9:

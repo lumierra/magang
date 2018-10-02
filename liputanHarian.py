@@ -7,11 +7,15 @@ SL = Scraper_Liputan()
 db = Database()
 now = datetime.datetime.now().date()
 
+database = 'scraper'
+collection = 'test'
+source = 'liputan6.com'
+
 list_category_liputan = ['news', 'bisnis', 'bola', 'showbiz', 'tekno', 'otomotif']
 list_name_category_liputan = ['news', 'bisnis', 'sports', 'entertainment', 'tekno', 'otomotif']
 
 #delete data from mongoDB
-db.delete_dataDaily('scraper', 'test', 'liputan6.com')
+db.delete_dataDaily(database, collection, source)
 
 #Get Data
 for x,y in zip(list_category_liputan, list_name_category_liputan):
@@ -21,12 +25,12 @@ for x,y in zip(list_category_liputan, list_name_category_liputan):
     for i in range(len(data)):
         attr.append(data[i])
 
-    db.insert_data('scraper', 'test', attr)
+    db.insert_data(database, collection, attr)
 
 
 data = SL.get_ner()
 attr = []
 for d in data:
     attr.append(d)
-db.delete_dataDaily('scraper', 'test', 'liputan6.com')
-db.insert_data('scraper', 'test', attr)
+db.delete_dataDaily(database, collection, source)
+db.insert_data(database, collection, attr)
