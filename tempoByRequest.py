@@ -11,12 +11,12 @@ now = datetime.datetime.now().date()
 
 status = 'harian'
 database = 'scraper'
-collection = 'otomotif'
+collection = 'sports'
 source = 'tempo.co'
-category = 'otomotif'
-name_category = 'otomotif'
+category = 'bola'
+name_category = 'sports'
 day = 31
-month = 6
+month = 1
 year = 2018
 
 for i in range(31):
