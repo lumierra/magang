@@ -89,7 +89,7 @@ class Scraper_Tempo():
 
         return all_data
 
-    def get_ner2(self, status=None, database=None, collection=None, source=None, day=None, month=None, year=None):
+    def get_ner2(self, database=None, collection=None, source=None, day=None, month=None, year=None):
 
         query = db.get_dataByRequest(database, collection, source, day, month, year)
 

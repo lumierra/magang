@@ -1,8 +1,8 @@
 import datetime
 from Database.dbMongo import Database
-from Scraper.tempo_scraper import Scraper_Tempo
+from Scraper.liputan_scraper import Scraper_Liputan
 
-ST = Scraper_Tempo()
+SL = Scraper_Liputan()
 db = Database()
 now = datetime.datetime.now().date()
 
@@ -11,10 +11,10 @@ now = datetime.datetime.now().date()
 
 status = 'harian'
 database = 'scraper'
-collection = 'otomotif'
-source = 'tempo.co'
-category = 'otomotif'
-name_category = 'otomotif'
+collection = 'tekno'
+source = 'liputan6.com'
+category = 'tekno'
+name_category = 'tekno'
 day = 31
 month = 6
 year = 2018
@@ -25,7 +25,7 @@ for i in range(31):
     db.delete_by_request(database, collection, source, i+1, month, year)
 
     # Get Data
-    data = ST.get_dataHarian(category, name_category, year, month, i+1)
+    data = SL.get_dataHarian(category, name_category, year, month, i+1)
 
     attr = []
     for d in data:
@@ -33,7 +33,7 @@ for i in range(31):
 
     db.insert_data(database, collection, attr)
 
-    data = ST.get_ner2(database, collection, source, i+1, month, year)
+    data = SL.get_ner2(database, collection, source, i+1, month, year)
     attr = []
     for d in data:
         attr.append(d)
