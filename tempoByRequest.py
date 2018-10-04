@@ -16,8 +16,8 @@ source = 'tempo.co'
 category = 'bola'
 name_category = 'sports'
 day = 31
-month = 1
-year = 2018
+month = 10
+year = 2017
 
 for i in range(31):
 

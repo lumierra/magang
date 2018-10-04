@@ -191,8 +191,7 @@ class Scraper_Liputan():
         return data_json
 
     def get_content2(self, all_data=None):
-        print('Get Content...')
-        for i in tqdm(range(len(all_data))):
+        for i in tqdm(range(len(all_data)), desc='Get Content'):
             try:
                 temp = self.get_content(all_data[i]['url'])
                 all_data[i]['content'] = temp['content']
@@ -291,7 +290,7 @@ class Scraper_Liputan():
     def get_dataDaily(self, category=None, name_category=None, tahun=None, bulan=None, tanggal=None):
         all_data = []
 
-        for i in tqdm(range(2), desc='Get Data Daily'):
+        for i in range(2):
             if bulan <= 9:
                 if tanggal <= 9:
                     url = '''https://www.liputan6.com/{}/indeks/{}/0{}/0{}?page={}'''.format(category, tahun, bulan,
