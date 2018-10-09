@@ -316,9 +316,7 @@ class Scraper_Liputan():
             for y in range(len(contents)):
                 title = contents[y].select_one('.articles--rows--item__title').text
 
-                if title[:6] != 'VIDEO:' and title[:5] != 'FOTO:' and title[:6] != 'FOTO :' and title[
-                                                                                                :5] != 'Top 3' and title[
-                                                                                                                   :4] != 'Top3':
+                if title[:6] != 'VIDEO:' and title[:5] != 'FOTO:' and title[:6] != 'FOTO :' and title[:5] != 'Top 3' and title[:4] != 'Top3':
                     url_lokal = contents[y].select_one('.articles--rows--item__title > a')['href']
                     category = url.split('/')[3]
                     subCategory = contents[y].select_one('.articles--rows--item__category').text
