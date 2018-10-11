@@ -42,6 +42,32 @@ class Entity(object):
 
         return data
 
+    def delete_dataDaily(self):
+        client = pymongo.MongoClient("mongodb://localhost:27017")
+        db = client.scraper
+        col = db.topEntity
+
+        if month <= 9:
+            if day <= 9:
+                query = col.remove({
+                    'publishedAt': '0{}-0{}-{}'.format(day, month, year)
+                })
+            else:
+                query = col.remove({
+                    'publishedAt': '{}-0{}-{}'.format(day, month, year)
+                })
+        else:
+            if day <= 9:
+                query = col.remove({
+                    'publishedAt': '0{}-{}-{}'.format(day, month, year)
+                })
+            else:
+                query = col.remove({
+                    'publishedAt': '{}-{}-{}'.format(day, month, year)
+                })
+
+        return query
+
     def get_ner(self, all_data):
         data = []
         for ad in tqdm(all_data, desc='Top Entity'):
@@ -71,6 +97,7 @@ class Entity(object):
         return  data_json
 
     def top_entity(self):
+        self.delete_dataDaily()
         entity = self.get_query()
         entity = self.get_ner(entity)
         entity = self.get_counter(entity)
