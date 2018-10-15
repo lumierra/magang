@@ -27,7 +27,6 @@ for x,y in zip(list_category_liputan, list_name_category_liputan):
 
     db.insert_data(database, collection, attr)
 
-
 data = SL.get_ner()
 attr = []
 for d in data:
