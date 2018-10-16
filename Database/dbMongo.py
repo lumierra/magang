@@ -7,7 +7,7 @@ from pymongo.errors import ServerSelectionTimeoutError
 filename_config = os.path.abspath("Config/config.yml")
 config = yaml.load(open(filename_config, "r"))
 
-now = datetime.datetime.now().date()
+now = datetime.date.today()
 
 class Database():
     def __init__(self):
@@ -23,7 +23,7 @@ class Database():
         try:
             print(client.server_info())
         except ServerSelectionTimeoutError:
-            print("server is down.")
+            print("Server is down.")
 
     def insert_data(self, database=None, collection=None, attr=None):
         myclient = pymongo.MongoClient("mongodb://{}:{}".format(self.host, self.port))

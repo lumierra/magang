@@ -84,7 +84,8 @@ class Entity(object):
     def get_counter(self, all_data):
         data = []
         for ad in all_data:
-            data.append(ad)
+            if ad != '':
+                data.append(ad)
 
         return data
 

@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="28108628-4e2f-4310-93ca-ce9afbc16ebe" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/liputanHarian.py" beforeDir="false" afterPath="$PROJECT_DIR$/liputanHarian.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Database/dbMongo.py" beforeDir="false" afterPath="$PROJECT_DIR$/Database/dbMongo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Entity/entity.py" beforeDir="false" afterPath="$PROJECT_DIR$/Entity/entity.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -43,28 +43,28 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="LICENSE" value="1" />
-          <entry key="py" value="92" />
+          <entry key="py" value="98" />
           <entry key="txt" value="1" />
-          <entry key="yml" value="3" />
+          <entry key="yml" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="PLAIN_TEXT" value="2" />
-          <entry key="Python" value="92" />
-          <entry key="YAML" value="3" />
+          <entry key="Python" value="98" />
+          <entry key="YAML" value="4" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="35" />
-          <entry key="py" value="7934" />
+          <entry key="py" value="7958" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="35" />
-          <entry key="Python" value="7934" />
+          <entry key="Python" value="7958" />
         </counts>
       </usages-collector>
     </session>
@@ -75,24 +75,14 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/liputanHarian.py">
+        <entry file="file://$PROJECT_DIR$/Entity/entity.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="28" selection-start-line="28" selection-end-line="28" />
+            <state relative-caret-position="210">
+              <caret line="14" column="6" lean-forward="true" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="25" />
               <folding>
-                <element signature="e#0#15#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tempoHarian.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="33" column="38" selection-start-line="33" selection-start-column="38" selection-end-line="33" selection-end-column="38" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
+                <element signature="e#0#14#0" expanded="true" />
+                <marker date="1539586533807" expanded="true" signature="733:739" ph="..." />
+                <marker date="1539586533807" expanded="true" signature="2427:2586" ph="..." />
               </folding>
             </state>
           </provider>
@@ -110,6 +100,7 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>stopword</find>
+      <find>delete_dataDaily</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -124,7 +115,6 @@
         <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/Scraper/kompas_scraper.py" />
         <option value="$PROJECT_DIR$/tempoHarian.py" />
-        <option value="$PROJECT_DIR$/Database/dbMongo.py" />
         <option value="$PROJECT_DIR$/kompasHarian.py" />
         <option value="$PROJECT_DIR$/Scraper/tempo_scraper.py" />
         <option value="$PROJECT_DIR$/liputanByRequest.py" />
@@ -132,8 +122,9 @@
         <option value="$PROJECT_DIR$/Scraper/liputan_scraper.py" />
         <option value="$PROJECT_DIR$/Entity/top_ner.py" />
         <option value="$PROJECT_DIR$/top_entity.py" />
-        <option value="$PROJECT_DIR$/Entity/entity.py" />
         <option value="$PROJECT_DIR$/liputanHarian.py" />
+        <option value="$PROJECT_DIR$/Database/dbMongo.py" />
+        <option value="$PROJECT_DIR$/Entity/entity.py" />
       </list>
     </option>
   </component>
@@ -143,9 +134,9 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="y" value="34" />
-    <option name="width" value="1356" />
+    <option name="width" value="1346" />
     <option name="height" value="734" />
   </component>
   <component name="ProjectLevelVcsManager">
@@ -229,12 +220,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="34" width="1366" height="734" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" sideWeight="0.50247526" side_tool="true" weight="0.2659091" />
-      <window_info content_ui="combo" id="Project" order="1" sideWeight="0.49752474" visible="true" weight="0.2060606" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" sideWeight="0.49752474" visible="true" weight="0.2060606" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Database Changes" order="0" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="1" visible="true" weight="0.4152824" />
+      <window_info anchor="bottom" id="Terminal" order="1" visible="true" weight="0.4152824" />
       <window_info anchor="bottom" id="Event Log" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="3" show_stripe_button="false" />
       <window_info anchor="bottom" id="Python Console" order="4" />
@@ -278,13 +270,6 @@
     <entry file="file://$PROJECT_DIR$/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/Database/db.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1875">
-          <caret line="125" column="39" lean-forward="true" selection-start-line="125" selection-start-column="39" selection-end-line="125" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/save_data.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-510">
@@ -325,6 +310,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1093">
           <caret line="166" lean-forward="true" selection-start-line="166" selection-end-line="166" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+            <marker date="1538451085549" expanded="true" signature="664:5225" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -344,32 +333,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Database/dbMongo.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1440">
-          <caret line="100" column="20" selection-start-line="68" selection-start-column="4" selection-end-line="100" selection-end-column="20" />
+        <state relative-caret-position="-2295">
+          <caret line="25" column="30" selection-start-line="25" selection-start-column="30" selection-end-line="25" selection-end-column="30" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
-            <marker date="1538443727010" expanded="true" signature="1354:2359" ph="..." />
-            <marker date="1538443727010" expanded="true" signature="3606:4039" ph="..." />
-            <marker date="1538443727010" expanded="true" signature="5279:6277" ph="..." />
+            <marker date="1539662641018" expanded="true" signature="1345:2350" ph="..." />
+            <marker date="1539662641018" expanded="true" signature="3597:4030" ph="..." />
+            <marker date="1539662641018" expanded="true" signature="5270:6268" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/top_entity.py">
+    <entry file="file://$PROJECT_DIR$/Database/db.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="5" column="16" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="16" />
+        <state relative-caret-position="1375">
+          <caret line="125" column="39" lean-forward="true" selection-start-line="125" selection-start-column="39" selection-end-line="125" selection-end-column="39" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Entity/entity.py">
+    <entry file="file://$PROJECT_DIR$/liputanHarian.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="107" column="60" selection-start-line="107" selection-start-column="60" selection-end-line="107" selection-end-column="60" />
+        <state relative-caret-position="420">
+          <caret line="28" selection-start-line="28" selection-end-line="28" />
           <folding>
-            <element signature="e#0#14#0" expanded="true" />
-            <marker date="1539243275558" expanded="true" signature="733:739" ph="..." />
-            <marker date="1539243275558" expanded="true" signature="2398:2557" ph="..." />
+            <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -384,12 +371,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/liputanHarian.py">
+    <entry file="file://$PROJECT_DIR$/top_entity.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="28" selection-start-line="28" selection-end-line="28" />
+        <state relative-caret-position="75">
+          <caret line="5" column="16" selection-start-line="5" selection-start-column="16" selection-end-line="5" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Entity/entity.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="6" lean-forward="true" selection-start-line="14" selection-start-column="6" selection-end-line="14" selection-end-column="25" />
           <folding>
-            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#0#14#0" expanded="true" />
+            <marker date="1539586533807" expanded="true" signature="733:739" ph="..." />
+            <marker date="1539586533807" expanded="true" signature="2427:2586" ph="..." />
           </folding>
         </state>
       </provider>
