@@ -5,7 +5,7 @@
 - Python 3.6
 - MongoDB
 
-# How to Using
+# How to use this repo
 ## First Step (Install Library and Models)
 - (env) pip install -r requirement.txt
 
