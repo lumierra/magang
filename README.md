@@ -6,20 +6,16 @@
 - MongoDB
 
 # How to Using
-## First Step
-### Install Library and Models
+## First Step (Install Library and Models)
 - (env) pip install -r requirement.txt
 
-## Second Step
-### Change your Database and Collection in MongoDB
+## Second Step (Change your Database and Collection in MongoDB)
 - Database -> Scraper
 - Collection -> Daily
 
-## Third Step
-### Try to scraping data 
+## Third Step (Try to scraping data)
 - (env) python tempoHarian.py
 
-## Fourth Step
-### Create Top Entity
+## Fourth Step (Create Top Entity)
 - (env) python top_entity.py
 
