@@ -26,7 +26,7 @@ for x,y in zip(list_category_kompas, list_name_category_kompas):
 
     db.insert_data(database, collection, attr)
 
-data = SK.get_ner()
+data = SK.get_ner('harian', database, collection, source)
 attr = []
 for d in data:
     attr.append(d)

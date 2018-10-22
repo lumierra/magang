@@ -23,9 +23,14 @@ class Scraper_Kompas():
     def __init__(self):
         self
 
-    def get_ner(self):
+    def get_ner(self, status=None, database=None, collection=None, source=None):
 
-        query = db.get_data('scraper', 'test', 'kompas.com')
+        # if status == 'harian':
+        #     query = db.get_data(database, collection, source)
+        # else:
+        #     query = db.get_dataMonthly('scraper', 'test2', 'tempo.co', '10', '2018')
+
+        query = db.get_data(database, collection, source)
 
         all_data = []
         for q in query:
@@ -75,9 +80,11 @@ class Scraper_Kompas():
 
             for d in data:
                 text = text.replace(d['text'],
-                                    '''<mark class="{} mark-{}">{}<span class="span-{}">{}</span>'''.format(d['label'],d['label'],d['text'],d['label'],d['text']))
+                                    '''<mark class="{label}-{_id} font-mark transparent style-{label}"> {text} </mark>'''.format(
+                                        _id=all_data[i]['_id'], label=d['label'], text=d['text']))
             text = ''.join(('''<div class="entities"> ''', text, ' </div>'))
             text = text.split('\n')
+
             all_data[i]['ner_content'] = text
 
         return all_data
