@@ -123,7 +123,8 @@ class Scraper_Kompas():
         for i in range(len(contents2)):
             if contents2[i].text != '':
                 if (contents2[i].text[:9] != 'Baca juga' and contents2[i].text[:5] != 'Baca:') \
-                        and (contents2[i].text[:15] != 'We are thrilled') and (contents2[i].text[:6] != 'Flinke'):
+                        and (contents2[i].text[:15] != 'We are thrilled') and (contents2[i].text[:6] != 'Flinke') \
+                        and (contents[i].text[:18] != 'Baca selengkapnya:'):
                     data.append(contents2[i].text  + '\n\n')
 
         con = ''.join(data)
