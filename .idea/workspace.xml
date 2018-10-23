@@ -60,7 +60,7 @@
         <counts>
           <entry key="dummy" value="35" />
           <entry key="md" value="662" />
-          <entry key="py" value="8013" />
+          <entry key="py" value="8084" />
           <entry key="txt" value="30" />
         </counts>
       </usages-collector>
@@ -68,7 +68,7 @@
         <counts>
           <entry key="Markdown" value="662" />
           <entry key="PLAIN_TEXT" value="65" />
-          <entry key="Python" value="8013" />
+          <entry key="Python" value="8084" />
         </counts>
       </usages-collector>
     </session>
@@ -90,8 +90,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Scraper/kompas_scraper.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="126" column="76" selection-start-line="126" selection-start-column="76" selection-end-line="126" selection-end-column="76" />
+            <state relative-caret-position="210">
+              <caret line="127" column="64" lean-forward="true" selection-start-line="127" selection-start-column="64" selection-end-line="127" selection-end-column="64" />
             </state>
           </provider>
         </entry>
@@ -411,8 +411,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Scraper/kompas_scraper.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="126" column="76" selection-start-line="126" selection-start-column="76" selection-end-line="126" selection-end-column="76" />
+        <state relative-caret-position="210">
+          <caret line="127" column="64" lean-forward="true" selection-start-line="127" selection-start-column="64" selection-end-line="127" selection-end-column="64" />
         </state>
       </provider>
     </entry>
