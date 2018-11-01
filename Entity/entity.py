@@ -34,7 +34,7 @@ class Entity(object):
         db = client.scraper
         col = db.test
         query = col.find({
-            'publishedAt': '{}-{}-{}'.format(day,month,year)
+            'publishedAt': '0{}-{}-{}'.format(day,month,year)
         })
         data = []
         for q in query:
